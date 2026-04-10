@@ -1,0 +1,5 @@
+cgi-bin/
+{css,js,images}/
+.well-known/
+.claude/
+.DS_Store
