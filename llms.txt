@@ -21,7 +21,7 @@ Ainika is the consulting practice of Josen Joy — a Senior Product Owner, Busin
 
 ## Products & Projects
 
-- TopListers (https://toplisters.xyz) — privacy-first job market intelligence platform. Track applications, submit anonymous job sightings, explore global hiring trends. Built with Python, FastAPI, React, Supabase.
+- TopListers (https://github.com/ainikaventures/toplisters) — privacy-first job market intelligence platform (in development). Track applications, submit anonymous job sightings, explore global hiring trends. Built with Python, FastAPI, React, Supabase.
 - SplitAI (https://github.com/ainikaventures/splitai) — smart expense splitting app for iOS and Android. Built with Flutter/Dart and PHP.
 - 2048 by Ainika (https://github.com/ainikaventures/2048) — reimagined 2048 puzzle game with custom tile icons, themes, and offline play. Built with Flutter/Dart.
 

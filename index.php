@@ -855,10 +855,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
 
     <div class="projects-grid">
 
-      <a href="https://toplisters.xyz" target="_blank" class="project-card reveal">
+      <a href="https://github.com/ainikaventures/toplisters" target="_blank" class="project-card reveal">
         <div class="project-card-num">01</div>
-        <div class="project-status status-live">
-          <span class="status-dot live"></span>Live
+        <div class="project-status status-building">
+          <span class="status-dot building"></span>In Development
         </div>
         <div class="project-sector">Job Market · Intelligence Platform</div>
         <h3 class="project-title">TopListers</h3>
@@ -870,7 +870,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
           <span class="tech-badge">Supabase</span>
           <span class="tech-badge">Adzuna API</span>
         </div>
-        <div class="project-cta">Visit toplisters.xyz →</div>
+        <div class="project-cta">Follow Progress on GitHub →</div>
       </a>
 
       <a href="https://github.com/ainikaventures/splitai" target="_blank" class="project-card reveal">
