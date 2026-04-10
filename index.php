@@ -27,6 +27,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Ainika – AI-Powered Products. Human-Centred Strategy. Product consulting, AI/ML strategy, and data products by Josen Joy.">
+<meta name="keywords" content="AI product strategy, ML consulting, product owner, business analyst, data science, SaaS, fintech, Josen Joy, Ainika">
+<meta name="author" content="Josen Joy">
+<link rel="canonical" href="https://ainika.xyz/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ainika.xyz/">
+<meta property="og:title" content="Ainika – AI-Powered Products. Human-Centred Strategy.">
+<meta property="og:description" content="Product consulting, AI/ML strategy, and data products by Josen Joy. Helping startups and enterprises translate data science into products that ship, scale, and matter.">
+<meta property="og:site_name" content="Ainika">
+<meta property="og:locale" content="en_GB">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ainika – AI-Powered Products. Human-Centred Strategy.">
+<meta name="twitter:description" content="Product consulting, AI/ML strategy, and data products by Josen Joy. Helping startups and enterprises translate data science into products that ship, scale, and matter.">
+
 <title>Ainika – AI-Powered Products. Human-Centred Strategy.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -573,6 +590,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
     .process-step { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
   }
 </style>
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Ainika",
+  "url": "https://ainika.xyz",
+  "description": "AI-Powered Products. Human-Centred Strategy. Product consulting, AI/ML strategy, and data products.",
+  "founder": {
+    "@type": "Person",
+    "name": "Josen Joy",
+    "jobTitle": "Senior Product Owner & AI/ML Strategist",
+    "url": "https://linkedin.com/in/josenjoy",
+    "sameAs": [
+      "https://linkedin.com/in/josenjoy",
+      "https://github.com/ainikaventures"
+    ]
+  },
+  "email": "hello@ainika.xyz",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Coventry",
+    "addressCountry": "GB"
+  },
+  "areaServed": "Worldwide",
+  "knowsAbout": ["AI/ML Products", "Data Science", "Product Management", "Business Analysis", "FinTech", "SaaS"],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Consulting Services",
+    "itemListElement": [
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "AI/ML Product Strategy & Roadmapping"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Business Analysis & Requirements Engineering"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Data Product Consulting"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Fractional Product Owner"}}
+    ]
+  },
+  "sameAs": [
+    "https://linkedin.com/in/josenjoy",
+    "https://github.com/ainikaventures"
+  ]
+}
+</script>
 </head>
 <body>
 

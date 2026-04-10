@@ -1,0 +1,33 @@
+# Ainika
+
+> AI-Powered Products. Human-Centred Strategy.
+
+Ainika is the consulting practice of Josen Joy — a Senior Product Owner, Business Analyst, and AI/ML strategist with over a decade of experience building AI/ML and SaaS products across fintech, enterprise automation, and digital transformation.
+
+## About
+
+- Founded by Josen Joy
+- Based in Coventry, UK — available globally
+- MSc Data Science & Computational Intelligence, Coventry University
+- SAFe 5 Certified Product Owner / Product Manager
+- 10+ years experience, 6 countries delivered, 350k+ users served
+
+## Services
+
+1. AI/ML Product Strategy & Roadmapping — turn data science capability into a product
+2. Business Analysis & Requirements Engineering — precise requirements from discovery to acceptance criteria
+3. Data Product Consulting — from raw data to a product people pay for
+4. Fractional Product Owner — senior PO embedded in your team part-time
+
+## Products & Projects
+
+- TopListers (https://toplisters.xyz) — privacy-first job market intelligence platform. Track applications, submit anonymous job sightings, explore global hiring trends. Built with Python, FastAPI, React, Supabase.
+- SplitAI (https://github.com/ainikaventures/splitai) — smart expense splitting app for iOS and Android. Built with Flutter/Dart and PHP.
+- 2048 by Ainika (https://github.com/ainikaventures/2048) — reimagined 2048 puzzle game with custom tile icons, themes, and offline play. Built with Flutter/Dart.
+
+## Contact
+
+- Email: hello@ainika.xyz
+- LinkedIn: https://linkedin.com/in/josenjoy
+- GitHub: https://github.com/ainikaventures
+- Website: https://ainika.xyz
