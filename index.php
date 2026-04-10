@@ -1,24 +1,51 @@
 <?php
+session_start();
+
+// Generate math challenge
+if (!isset($_SESSION['captcha_a']) || $_SERVER['REQUEST_METHOD'] !== 'POST') {
+    $_SESSION['captcha_a'] = rand(1, 9);
+    $_SESSION['captcha_b'] = rand(1, 9);
+}
+
 // Contact form handler
 $form_success = false;
 $form_error = false;
+$form_bot = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
-    $name    = htmlspecialchars(trim($_POST['name'] ?? ''));
-    $email   = htmlspecialchars(trim($_POST['email'] ?? ''));
-    $service = htmlspecialchars(trim($_POST['service'] ?? ''));
-    $message = htmlspecialchars(trim($_POST['message'] ?? ''));
-
-    if ($name && $email && $message && filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $to      = 'hello@ainika.xyz';
-        $subject = "Ainika Enquiry from $name – $service";
-        $body    = "Name: $name\nEmail: $email\nService: $service\n\nMessage:\n$message";
-        $headers = "From: noreply@ainika.xyz\r\nReply-To: $email\r\nX-Mailer: PHP/" . phpversion();
-        $form_success = mail($to, $subject, $body, $headers);
-        if (!$form_success) $form_error = true;
-    } else {
-        $form_error = true;
+    // Honeypot check — bots fill this hidden field, humans don't
+    if (!empty($_POST['website_url'])) {
+        $form_bot = true;
     }
+
+    // Math challenge check
+    $captcha_answer = intval($_POST['captcha'] ?? 0);
+    $captcha_expected = ($_SESSION['captcha_a'] ?? 0) + ($_SESSION['captcha_b'] ?? 0);
+    if ($captcha_answer !== $captcha_expected) {
+        $form_error = 'verify';
+    }
+
+    if (!$form_bot && !$form_error) {
+        $name    = htmlspecialchars(trim($_POST['name'] ?? ''));
+        $email   = htmlspecialchars(trim($_POST['email'] ?? ''));
+        $service = htmlspecialchars(trim($_POST['service'] ?? ''));
+        $message = htmlspecialchars(trim($_POST['message'] ?? ''));
+
+        if ($name && $email && $message && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $to      = 'hello@ainika.xyz';
+            $subject = "Ainika Enquiry from $name – $service";
+            $body    = "Name: $name\nEmail: $email\nService: $service\n\nMessage:\n$message";
+            $headers = "From: noreply@ainika.xyz\r\nReply-To: $email\r\nX-Mailer: PHP/" . phpversion();
+            $form_success = mail($to, $subject, $body, $headers);
+            if (!$form_success) $form_error = 'send';
+        } else {
+            $form_error = 'fields';
+        }
+    }
+
+    // Regenerate challenge after each attempt
+    $_SESSION['captcha_a'] = rand(1, 9);
+    $_SESSION['captcha_b'] = rand(1, 9);
 }
 ?>
 <!DOCTYPE html>
@@ -957,8 +984,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
       <div class="reveal">
         <?php if ($form_success): ?>
           <div class="form-msg success">Thank you — your message has been received. We'll be in touch within 24 hours.</div>
-        <?php elseif ($form_error): ?>
+        <?php elseif ($form_error === 'verify'): ?>
+          <div class="form-msg error">Verification failed — please check your answer and try again.</div>
+        <?php elseif ($form_error === 'send'): ?>
           <div class="form-msg error">Something went wrong. Please email hello@ainika.xyz directly.</div>
+        <?php elseif ($form_error === 'fields'): ?>
+          <div class="form-msg error">Please fill in all required fields with a valid email address.</div>
         <?php endif; ?>
 
         <form class="contact-form" method="POST" action="#contact">
@@ -987,6 +1018,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
             <label for="message">Tell Us About Your Project</label>
             <textarea id="message" name="message" required placeholder="Give us a brief overview of what you're building or the problem you're trying to solve..."></textarea>
           </div>
+          <!-- Honeypot — hidden from humans, bots fill it -->
+          <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
+            <label for="website_url">Leave this empty</label>
+            <input type="text" name="website_url" id="website_url" tabindex="-1" autocomplete="off">
+          </div>
+
+          <!-- Human verification -->
+          <div class="form-group">
+            <label for="captcha">Quick check — what is <?php echo $_SESSION['captcha_a'] . ' + ' . $_SESSION['captcha_b']; ?>?</label>
+            <input type="number" id="captcha" name="captcha" required placeholder="Your answer" inputmode="numeric">
+          </div>
+
           <button type="submit" name="contact_submit" class="form-submit">Send Enquiry →</button>
         </form>
       </div>
