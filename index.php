@@ -72,6 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
 <meta name="twitter:description" content="Product consulting, AI/ML strategy, and data products by Josen Joy. Helping startups and enterprises translate data science into products that ship, scale, and matter.">
 
 <title>Ainika – AI-Powered Products. Human-Centred Strategy.</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='28' height='28' fill='none' stroke='%23b89a5a' stroke-width='2'/%3E%3Cpath d='M16 8 L8 26 M16 8 L24 26' fill='none' stroke='%230d0d0d' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -156,9 +157,108 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
     letter-spacing: 0.12em;
     color: var(--ink);
     text-decoration: none;
-    display: flex; align-items: center; gap: 10px;
+    display: flex; align-items: center; gap: 12px;
   }
-  .nav-logo span.dot { color: var(--gold); font-size: 28px; line-height: 1; }
+
+  /* ─── AINIKA MARK ─── */
+  .ainika-mark {
+    width: 30px; height: 30px; display: block; flex-shrink: 0;
+    overflow: visible;
+  }
+  .ainika-mark .box {
+    fill: none; stroke: var(--gold); stroke-width: 2;
+    stroke-dasharray: 112; stroke-dashoffset: 112;
+    animation: markDraw 1.1s ease 0.1s forwards;
+    transform-origin: 16px 16px;
+    transition: transform 0.5s cubic-bezier(.6,.2,.2,1);
+  }
+  .ainika-mark .chev {
+    fill: none; stroke: currentColor; stroke-width: 2.6;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 44; stroke-dashoffset: 44;
+    animation: markDraw 0.9s ease 0.7s forwards;
+    transform-origin: 16px 22px;
+    transition: transform 0.4s cubic-bezier(.6,.2,.2,1);
+  }
+  .nav-logo:hover .ainika-mark .box,
+  .footer-logo:hover .ainika-mark .box { transform: rotate(90deg); }
+  .nav-logo:hover .ainika-mark .chev,
+  .footer-logo:hover .ainika-mark .chev { transform: translateY(-3px); }
+
+  @keyframes markDraw {
+    to { stroke-dashoffset: 0; }
+  }
+
+  /* ─── MARK SHOWCASE (mid-page interlude) ─── */
+  .mark-showcase {
+    padding: 140px 60px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; position: relative; overflow: hidden;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(184,154,90,0.08), transparent 60%),
+      var(--paper);
+  }
+  .mark-stage {
+    position: relative; width: 240px; height: 240px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: none;
+  }
+  .mark-stage::before {
+    content: ''; position: absolute; inset: -40px;
+    background: radial-gradient(circle, rgba(184,154,90,0.18), transparent 65%);
+    filter: blur(20px); opacity: 0; transition: opacity 0.6s ease;
+  }
+  .mark-showcase.in-view .mark-stage::before { opacity: 1; }
+
+  .ainika-mark--display { width: 240px; height: 240px; color: var(--ink); }
+  .ainika-mark--display .box {
+    stroke-width: 1.5;
+    stroke-dasharray: 112; stroke-dashoffset: 112;
+    animation: none;
+    transform-origin: 16px 16px;
+  }
+  .ainika-mark--display .chev {
+    stroke-width: 2;
+    stroke-dasharray: 44; stroke-dashoffset: 44;
+    animation: none;
+    transform-origin: 16px 16px;
+    transition: transform 0.4s cubic-bezier(.6,.2,.2,1);
+  }
+  .mark-showcase.in-view .ainika-mark--display .box {
+    animation: markDraw 1.2s ease forwards, markSpin 14s linear 1.4s infinite;
+  }
+  .mark-showcase.in-view .ainika-mark--display .chev {
+    animation: markDraw 1s ease 0.6s forwards, markBob 3.6s ease-in-out 1.8s infinite;
+  }
+  .mark-stage:hover .ainika-mark--display .box { animation-duration: 1.2s, 4s; }
+  .mark-stage:hover .ainika-mark--display .chev { transform: scale(1.08); }
+
+  @keyframes markSpin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  @keyframes markBob {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-2px); }
+  }
+
+  .mark-caption {
+    margin-top: 56px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--ink-soft);
+  }
+  .mark-caption em {
+    font-family: var(--serif); font-style: italic; font-size: 22px;
+    letter-spacing: 0; color: var(--ink); display: block; margin-top: 14px;
+    text-transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mark-showcase.in-view .ainika-mark--display .box,
+    .mark-showcase.in-view .ainika-mark--display .chev {
+      animation: markDraw 1s ease forwards;
+    }
+  }
   .nav-links { display: flex; gap: 40px; list-style: none; }
   .nav-links a {
     font-family: var(--mono);
@@ -575,8 +675,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
   .footer-logo {
     font-family: var(--serif); font-size: 20px; font-weight: 300;
     letter-spacing: 0.1em; color: var(--paper);
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none;
   }
-  .footer-logo span { color: var(--gold); }
   .footer-copy {
     font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em;
     color: rgba(255,255,255,0.3); text-align: center;
@@ -668,7 +769,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
 
 <!-- ─── NAV ─── -->
 <nav id="mainNav">
-  <a href="#hero" class="nav-logo">Ainika<span class="dot">·</span></a>
+  <a href="#hero" class="nav-logo" aria-label="Ainika home">
+    <svg class="ainika-mark" viewBox="0 0 32 32" aria-hidden="true">
+      <rect class="box" x="2" y="2" width="28" height="28"/>
+      <path class="chev" d="M16 8 L8 26 M16 8 L24 26"/>
+    </svg>
+    Ainika
+  </a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#services">Services</a></li>
@@ -921,6 +1028,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
   </div>
 </section>
 
+<!-- ─── MARK INTERLUDE ─── -->
+<section class="mark-showcase reveal" aria-hidden="true">
+  <div class="mark-stage" id="markStage">
+    <svg class="ainika-mark ainika-mark--display" viewBox="0 0 32 32">
+      <rect class="box" x="2" y="2" width="28" height="28"/>
+      <path class="chev" d="M16 8 L8 26 M16 8 L24 26"/>
+    </svg>
+  </div>
+  <div class="mark-caption">
+    The Mark
+    <em>Built to ship. Made to matter.</em>
+  </div>
+</section>
+
 <!-- ─── PROCESS ─── -->
 <section id="process">
   <div class="section-inner">
@@ -1039,7 +1160,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
 
 <!-- ─── FOOTER ─── -->
 <footer>
-  <div class="footer-logo">Ainika<span>·</span></div>
+  <a href="#hero" class="footer-logo" aria-label="Ainika home">
+    <svg class="ainika-mark" viewBox="0 0 32 32" aria-hidden="true">
+      <rect class="box" x="2" y="2" width="28" height="28"/>
+      <path class="chev" d="M16 8 L8 26 M16 8 L24 26"/>
+    </svg>
+    Ainika
+  </a>
   <div class="footer-copy">© <?php echo date('Y'); ?> Ainika. All rights reserved.</div>
   <div class="footer-links">
     <a href="https://linkedin.com/in/josenjoy" target="_blank">LinkedIn</a>
@@ -1076,12 +1203,47 @@ const reveals = document.querySelectorAll('.reveal');
 const obs = new IntersectionObserver((entries) => {
   entries.forEach((e, i) => {
     if (e.isIntersecting) {
-      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      setTimeout(() => {
+        e.target.classList.add('visible');
+        if (e.target.classList.contains('mark-showcase')) e.target.classList.add('in-view');
+      }, i * 80);
       obs.unobserve(e.target);
     }
   });
 }, { threshold: 0.1 });
 reveals.forEach(r => obs.observe(r));
+
+// ── MARK PARALLAX — chevron tilts toward cursor when near the stage
+const stage = document.getElementById('markStage');
+if (stage) {
+  const chev = stage.querySelector('.chev');
+  let tx = 0, ty = 0, cx = 0, cy = 0, raf;
+  const tick = () => {
+    cx += (tx - cx) * 0.12;
+    cy += (ty - cy) * 0.12;
+    if (tx === 0 && ty === 0 && Math.abs(cx) < 0.1 && Math.abs(cy) < 0.1) {
+      chev.style.transform = '';
+      raf = null;
+      return;
+    }
+    chev.style.transform = `translate(${cx}px, ${cy}px)`;
+    raf = requestAnimationFrame(tick);
+  };
+  document.addEventListener('mousemove', e => {
+    const r = stage.getBoundingClientRect();
+    const dx = e.clientX - (r.left + r.width / 2);
+    const dy = e.clientY - (r.top + r.height / 2);
+    const dist = Math.hypot(dx, dy);
+    const reach = 320;
+    if (dist > reach) { tx = 0; ty = 0; }
+    else {
+      const k = (1 - dist / reach) * 1.6;
+      tx = (dx / r.width) * k;
+      ty = (dy / r.height) * k;
+    }
+    if (!raf) raf = requestAnimationFrame(tick);
+  });
+}
 </script>
 </body>
 </html>
