@@ -3,3 +3,5 @@ cgi-bin/
 .well-known/
 .claude/
 .DS_Store
+.playwright-mcp/
+pretext-main/

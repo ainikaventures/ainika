@@ -1,24 +1,20 @@
 <?php
 session_start();
 
-// Generate math challenge
 if (!isset($_SESSION['captcha_a']) || $_SERVER['REQUEST_METHOD'] !== 'POST') {
     $_SESSION['captcha_a'] = rand(1, 9);
     $_SESSION['captcha_b'] = rand(1, 9);
 }
 
-// Contact form handler
 $form_success = false;
 $form_error = false;
 $form_bot = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
-    // Honeypot check — bots fill this hidden field, humans don't
     if (!empty($_POST['website_url'])) {
         $form_bot = true;
     }
 
-    // Math challenge check
     $captcha_answer = intval($_POST['captcha'] ?? 0);
     $captcha_expected = ($_SESSION['captcha_a'] ?? 0) + ($_SESSION['captcha_b'] ?? 0);
     if ($captcha_answer !== $captcha_expected) {
@@ -33,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
 
         if ($name && $email && $message && filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $to      = 'hello@ainika.xyz';
-            $subject = "Ainika Enquiry from $name – $service";
+            $subject = "ainika. enquiry from $name – $service";
             $body    = "Name: $name\nEmail: $email\nService: $service\n\nMessage:\n$message";
             $headers = "From: noreply@ainika.xyz\r\nReply-To: $email\r\nX-Mailer: PHP/" . phpversion();
             $form_success = mail($to, $subject, $body, $headers);
@@ -43,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
         }
     }
 
-    // Regenerate challenge after each attempt
     $_SESSION['captcha_a'] = rand(1, 9);
     $_SESSION['captcha_b'] = rand(1, 9);
 }
@@ -52,681 +47,624 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Ainika – AI-Powered Products. Human-Centred Strategy. Product consulting, AI/ML strategy, and data products by Josen Joy.">
-<meta name="keywords" content="AI product strategy, ML consulting, product owner, business analyst, data science, SaaS, fintech, Josen Joy, Ainika">
-<meta name="author" content="Josen Joy">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>ainika. — AI-powered products. Human-centred strategy.</title>
+<meta name="description" content="ainika. is the consulting practice of Josen Joy — Senior Product Owner and AI/ML strategist. We help startups and enterprises translate data science into products that ship.">
 <link rel="canonical" href="https://ainika.xyz/">
 
-<!-- Open Graph -->
+<link rel="icon" type="image/svg+xml" href="/brand/ainika-favicon.svg">
+<link rel="alternate icon" href="/brand/ainika-favicon-32.png">
+<link rel="apple-touch-icon" href="/brand/ainika-apple-touch.svg">
+
+<meta property="og:title" content="ainika.">
+<meta property="og:description" content="AI-powered products. Human-centred strategy.">
+<meta property="og:image" content="https://ainika.xyz/brand/ainika-og.svg">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://ainika.xyz/">
-<meta property="og:title" content="Ainika – AI-Powered Products. Human-Centred Strategy.">
-<meta property="og:description" content="Product consulting, AI/ML strategy, and data products by Josen Joy. Helping startups and enterprises translate data science into products that ship, scale, and matter.">
-<meta property="og:site_name" content="Ainika">
-<meta property="og:locale" content="en_GB">
+<meta property="og:url" content="https://ainika.xyz">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ainika.">
+<meta name="twitter:description" content="AI-powered products. Human-centred strategy.">
+<meta name="twitter:image" content="https://ainika.xyz/brand/ainika-og.svg">
 
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ainika – AI-Powered Products. Human-Centred Strategy.">
-<meta name="twitter:description" content="Product consulting, AI/ML strategy, and data products by Josen Joy. Helping startups and enterprises translate data science into products that ship, scale, and matter.">
+<meta name="theme-color" content="#FAFAF7">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Josen Joy">
+<meta name="msvalidate.01" content="37732678DBE45B49903B790E524316AC">
 
-<title>Ainika – AI-Powered Products. Human-Centred Strategy.</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='28' height='28' fill='none' stroke='%23b89a5a' stroke-width='2'/%3E%3Cpath d='M16 8 L8 26 M16 8 L24 26' fill='none' stroke='%230d0d0d' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QJCQB8Y65N"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-QJCQB8Y65N');
+</script>
+
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "wq6kitujjx");
+</script>
+
 <style>
-  /* ─── RESET & ROOT ─── */
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
   :root {
-    --ink:      #0d0d0d;
-    --ink-mid:  #3a3a3a;
-    --ink-soft: #888;
-    --paper:    #fafaf8;
-    --paper-2:  #f2f1ee;
-    --gold:     #b89a5a;
-    --gold-lt:  #d4b87a;
-    --rule:     #e4e2dc;
-    --mono:     'DM Mono', monospace;
-    --serif:    'Cormorant Garamond', Georgia, serif;
-    --sans:     'DM Sans', sans-serif;
+    --ink:    #0E0E10;
+    --paper:  #FAFAF7;
+    --signal: #FF5B2E;
+    --smoke:  #F1EFEA;
+    --line:   rgba(14,14,16,0.08);
+    --muted:  rgba(14,14,16,0.55);
+    --paper-soft: rgba(250,250,247,0.72);
+    --paper-muted: rgba(250,250,247,0.55);
+
+    --font-display: 'Outfit', system-ui, -apple-system, sans-serif;
+    --font-body:    'Inter',  system-ui, -apple-system, sans-serif;
+    --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+    --radius-sm:  8px;
+    --radius-md: 14px;
+    --radius-lg: 24px;
+
+    --pad: clamp(20px, 5vw, 96px);
   }
 
-  html { scroll-behavior: smooth; font-size: 16px; }
-
+  *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
   body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: var(--sans);
-    font-weight: 300;
-    line-height: 1.7;
-    overflow-x: hidden;
-    cursor: none;
+    font-family: var(--font-body); color: var(--ink); background: var(--paper);
+    font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
+  img, svg { display: block; max-width: 100%; height: auto; }
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: var(--signal); color: var(--paper); }
+  :focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; border-radius: 2px; }
 
-  /* ─── CUSTOM CURSOR ─── */
-  .cursor-dot {
-    width: 6px; height: 6px;
-    background: var(--gold);
-    border-radius: 50%;
-    position: fixed; top: 0; left: 0;
-    pointer-events: none; z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: transform 0.08s ease;
-  }
-  .cursor-ring {
-    width: 28px; height: 28px;
-    border: 1px solid var(--gold);
-    border-radius: 50%;
-    position: fixed; top: 0; left: 0;
-    pointer-events: none; z-index: 9998;
-    transform: translate(-50%, -50%);
-    transition: all 0.18s ease;
-    opacity: 0.6;
-  }
-  .cursor-ring.hover { width: 44px; height: 44px; opacity: 0.3; }
-
-  /* ─── NOISE OVERLAY ─── */
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-    pointer-events: none; z-index: 0; opacity: 0.4;
-  }
-
-  /* ─── NAVIGATION ─── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  /* ─── NAV ─── */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; height: 64px; z-index: 50;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 28px 60px;
-    mix-blend-mode: normal;
-    transition: background 0.4s ease, padding 0.4s ease, box-shadow 0.4s ease;
+    padding: 0 var(--pad);
+    background: transparent; color: var(--paper);
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    border-bottom: 1px solid transparent;
   }
-  nav.scrolled {
-    background: rgba(250, 250, 248, 0.94);
-    backdrop-filter: blur(12px);
-    padding: 18px 60px;
-    box-shadow: 0 1px 0 var(--rule);
+  .nav.is-scrolled {
+    background: var(--paper-soft);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    color: var(--ink); border-bottom-color: var(--line);
   }
-  .nav-logo {
-    font-family: var(--serif);
-    font-size: 22px;
-    font-weight: 300;
-    letter-spacing: 0.12em;
-    color: var(--ink);
-    text-decoration: none;
-    display: flex; align-items: center; gap: 12px;
+  .nav-wordmark {
+    font-family: var(--font-display); font-weight: 700; font-size: 22px;
+    letter-spacing: -0.04em; line-height: 1;
   }
-
-  /* ─── AINIKA MARK ─── */
-  .ainika-mark {
-    width: 30px; height: 30px; display: block; flex-shrink: 0;
-    overflow: visible;
-  }
-  .ainika-mark .box {
-    fill: none; stroke: var(--gold); stroke-width: 2;
-    stroke-dasharray: 112; stroke-dashoffset: 112;
-    animation: markDraw 1.1s ease 0.1s forwards;
-    transform-origin: 16px 16px;
-    transition: transform 0.5s cubic-bezier(.6,.2,.2,1);
-  }
-  .ainika-mark .chev {
-    fill: none; stroke: currentColor; stroke-width: 2.6;
-    stroke-linecap: round; stroke-linejoin: round;
-    stroke-dasharray: 44; stroke-dashoffset: 44;
-    animation: markDraw 0.9s ease 0.7s forwards;
-    transform-origin: 16px 22px;
-    transition: transform 0.4s cubic-bezier(.6,.2,.2,1);
-  }
-  .nav-logo:hover .ainika-mark .box,
-  .footer-logo:hover .ainika-mark .box { transform: rotate(90deg); }
-  .nav-logo:hover .ainika-mark .chev,
-  .footer-logo:hover .ainika-mark .chev { transform: translateY(-3px); }
-
-  @keyframes markDraw {
-    to { stroke-dashoffset: 0; }
-  }
-
-  /* ─── MARK SHOWCASE (mid-page interlude) ─── */
-  .mark-showcase {
-    padding: 140px 60px;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    text-align: center; position: relative; overflow: hidden;
-    background:
-      radial-gradient(circle at 50% 50%, rgba(184,154,90,0.08), transparent 60%),
-      var(--paper);
-  }
-  .mark-stage {
-    position: relative; width: 240px; height: 240px;
-    display: flex; align-items: center; justify-content: center;
-    cursor: none;
-  }
-  .mark-stage::before {
-    content: ''; position: absolute; inset: -40px;
-    background: radial-gradient(circle, rgba(184,154,90,0.18), transparent 65%);
-    filter: blur(20px); opacity: 0; transition: opacity 0.6s ease;
-  }
-  .mark-showcase.in-view .mark-stage::before { opacity: 1; }
-
-  .ainika-mark--display { width: 240px; height: 240px; color: var(--ink); }
-  .ainika-mark--display .box {
-    stroke-width: 1.5;
-    stroke-dasharray: 112; stroke-dashoffset: 112;
-    animation: none;
-    transform-origin: 16px 16px;
-  }
-  .ainika-mark--display .chev {
-    stroke-width: 2;
-    stroke-dasharray: 44; stroke-dashoffset: 44;
-    animation: none;
-    transform-origin: 16px 16px;
-    transition: transform 0.4s cubic-bezier(.6,.2,.2,1);
-  }
-  .mark-showcase.in-view .ainika-mark--display .box {
-    animation: markDraw 1.2s ease forwards, markSpin 14s linear 1.4s infinite;
-  }
-  .mark-showcase.in-view .ainika-mark--display .chev {
-    animation: markDraw 1s ease 0.6s forwards, markBob 3.6s ease-in-out 1.8s infinite;
-  }
-  .mark-stage:hover .ainika-mark--display .box { animation-duration: 1.2s, 4s; }
-  .mark-stage:hover .ainika-mark--display .chev { transform: scale(1.08); }
-
-  @keyframes markSpin {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
-  }
-  @keyframes markBob {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-2px); }
-  }
-
-  .mark-caption {
-    margin-top: 56px;
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.3em;
-    text-transform: uppercase; color: var(--ink-soft);
-  }
-  .mark-caption em {
-    font-family: var(--serif); font-style: italic; font-size: 22px;
-    letter-spacing: 0; color: var(--ink); display: block; margin-top: 14px;
-    text-transform: none;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .mark-showcase.in-view .ainika-mark--display .box,
-    .mark-showcase.in-view .ainika-mark--display .chev {
-      animation: markDraw 1s ease forwards;
-    }
-  }
-  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-wordmark .dot { color: var(--signal); }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
   .nav-links a {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ink-mid);
-    text-decoration: none;
-    transition: color 0.2s;
-    position: relative;
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em;
+    color: inherit; opacity: 0.75; transition: opacity 0.2s;
   }
-  .nav-links a::after {
-    content: ''; position: absolute; bottom: -3px; left: 0; right: 0;
-    height: 1px; background: var(--gold);
-    transform: scaleX(0); transform-origin: left;
-    transition: transform 0.3s ease;
-  }
-  .nav-links a:hover { color: var(--ink); }
-  .nav-links a:hover::after { transform: scaleX(1); }
+  .nav-links a:hover { opacity: 1; }
   .nav-cta {
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em;
-    text-transform: uppercase; color: var(--gold);
-    border: 1px solid var(--gold); padding: 10px 22px; text-decoration: none;
-    transition: all 0.25s ease;
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em;
+    padding: 8px 16px; border-radius: 999px;
+    background: var(--signal); color: var(--ink);
+    transition: transform 0.2s ease;
   }
-  .nav-cta:hover { background: var(--gold); color: var(--paper); }
+  .nav-cta:hover { transform: translateY(-1px); }
+  @media (max-width: 720px) {
+    .nav-links a:not(.nav-cta) { display: none; }
+  }
 
   /* ─── HERO ─── */
-  #hero {
-    min-height: 100vh;
+  .hero {
+    background: var(--ink); color: var(--paper);
+    min-height: 100vh; min-height: 100svh;
     display: flex; flex-direction: column; justify-content: center;
-    padding: 120px 60px 80px;
-    position: relative;
-    overflow: hidden;
+    padding: 120px var(--pad) 80px;
+    position: relative; overflow: hidden;
   }
-  .hero-grid-line {
-    position: absolute; top: 0; bottom: 0;
-    width: 1px; background: var(--rule);
+  .hero-kicker {
+    position: absolute; top: 88px; left: var(--pad);
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em;
+    color: var(--paper-muted);
   }
-  .hero-grid-line:nth-child(1) { left: 60px; }
-  .hero-grid-line:nth-child(2) { right: 60px; }
-  .hero-grid-line:nth-child(3) { left: 50%; opacity: 0.4; }
-
-  .hero-eyebrow {
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.25em;
-    color: var(--gold); text-transform: uppercase; margin-bottom: 32px;
-    opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards;
-    display: flex; align-items: center; gap: 16px;
+  .wordmark {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(64px, 14vw, 220px);
+    letter-spacing: -0.04em; line-height: 1;
+    white-space: nowrap; color: var(--paper);
+    margin-bottom: 40px;
   }
-  .hero-eyebrow::before {
-    content: ''; display: block; width: 40px; height: 1px; background: var(--gold);
+  .wordmark .dot { color: var(--signal); animation: blink 1s step-end infinite; }
+  .wordmark .suffix {
+    display: inline-block; overflow: hidden; vertical-align: bottom;
+    max-width: 6em;
+    animation: collapse 10s cubic-bezier(0.65, 0, 0.35, 1) infinite;
   }
-
-  h1.hero-title {
-    font-family: var(--serif);
-    font-size: clamp(52px, 7vw, 96px);
-    font-weight: 300;
-    line-height: 1.08;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-    max-width: 900px;
-    opacity: 0; animation: fadeUp 0.9s ease 0.4s forwards;
+  @keyframes blink    { 0%, 50%, 100% { opacity: 1; } 25%, 75% { opacity: 0.15; } }
+  @keyframes collapse {
+    0%, 50%  { max-width: 6em; opacity: 1; }
+    55%, 95% { max-width: 0;   opacity: 0; }
+    100%     { max-width: 6em; opacity: 1; }
   }
-  h1.hero-title em {
-    font-style: italic; color: var(--gold);
+  .hero-sub {
+    font-family: var(--font-display); font-weight: 600;
+    font-size: clamp(28px, 4.4vw, 48px);
+    letter-spacing: -0.025em; line-height: 1.15;
+    max-width: 22ch; margin-bottom: 24px;
   }
-
+  .hero-sub em { font-style: normal; color: var(--signal); }
   .hero-tagline {
-    font-family: var(--sans); font-size: 16px; font-weight: 300;
-    color: var(--ink-soft); margin-top: 28px; max-width: 440px;
-    letter-spacing: 0.01em; line-height: 1.8;
-    opacity: 0; animation: fadeUp 0.9s ease 0.6s forwards;
+    font-family: var(--font-body); font-weight: 400;
+    font-size: clamp(15px, 1.4vw, 18px); line-height: 1.55;
+    color: var(--paper-muted); max-width: 56ch; margin-bottom: 48px;
   }
-
-  .hero-actions {
-    display: flex; gap: 20px; margin-top: 48px; align-items: center;
-    opacity: 0; animation: fadeUp 0.9s ease 0.8s forwards;
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+  .cta-pill {
+    display: inline-flex; align-items: center; gap: 12px;
+    height: 56px; padding: 0 28px; border-radius: 999px;
+    background: var(--signal); color: var(--ink);
+    font-family: var(--font-display); font-weight: 600; font-size: 17px;
+    letter-spacing: -0.01em;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
-  .btn-primary {
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
-    text-transform: uppercase; background: var(--ink); color: var(--paper);
-    padding: 16px 36px; text-decoration: none; transition: all 0.25s;
-    display: inline-block;
+  .cta-pill:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,91,46,0.3); }
+  .cta-pill .arrow { transition: transform 0.2s ease; }
+  .cta-pill:hover .arrow { transform: translateX(4px); }
+  .cta-ghost {
+    display: inline-flex; align-items: center; gap: 12px;
+    height: 56px; padding: 0 28px; border-radius: 999px;
+    background: transparent; color: var(--paper);
+    border: 1px solid rgba(250,250,247,0.25);
+    font-family: var(--font-display); font-weight: 600; font-size: 17px;
+    letter-spacing: -0.01em;
+    transition: border-color 0.2s ease, color 0.2s ease;
   }
-  .btn-primary:hover { background: var(--gold); }
-  .btn-ghost {
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
-    text-transform: uppercase; color: var(--ink-mid); text-decoration: none;
-    display: flex; align-items: center; gap: 10px; transition: color 0.2s;
-  }
-  .btn-ghost:hover { color: var(--gold); }
-  .btn-ghost::after { content: '→'; font-size: 14px; transition: transform 0.2s; }
-  .btn-ghost:hover::after { transform: translateX(4px); }
-
-  .hero-scroll-hint {
-    position: absolute; bottom: 40px; left: 60px;
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
-    color: var(--ink-soft); text-transform: uppercase;
-    display: flex; align-items: center; gap: 12px;
-    opacity: 0; animation: fadeUp 1s ease 1.2s forwards;
-  }
-  .hero-scroll-hint::before {
-    content: ''; display: block; width: 1px; height: 40px; background: var(--ink-soft);
-    animation: scrollLine 2s ease-in-out infinite;
-  }
-  @keyframes scrollLine {
-    0%, 100% { transform: scaleY(1); opacity: 1; }
-    50% { transform: scaleY(0.4); opacity: 0.3; }
-  }
+  .cta-ghost:hover { border-color: var(--signal); color: var(--signal); }
 
   .hero-stats {
-    position: absolute; bottom: 40px; right: 60px;
-    display: flex; gap: 48px;
-    opacity: 0; animation: fadeUp 1s ease 1s forwards;
+    display: flex; gap: clamp(32px, 5vw, 64px); margin-top: 72px; flex-wrap: wrap;
+    padding-top: 32px; border-top: 1px solid rgba(250,250,247,0.12);
+    max-width: 720px;
   }
-  .stat-item { text-align: right; }
   .stat-num {
-    font-family: var(--serif); font-size: 36px; font-weight: 300;
-    color: var(--ink); line-height: 1; display: block;
+    display: block; font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(32px, 4vw, 48px); letter-spacing: -0.03em; line-height: 1;
+    color: var(--paper); margin-bottom: 8px;
   }
+  .stat-num .dot { color: var(--signal); }
   .stat-label {
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
-    color: var(--ink-soft); text-transform: uppercase; margin-top: 4px; display: block;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em;
+    color: var(--paper-muted); text-transform: lowercase;
   }
 
-  /* ─── SECTION SHARED ─── */
-  section { position: relative; z-index: 1; }
-  .section-inner { max-width: 1200px; margin: 0 auto; padding: 0 60px; }
+  /* ─── SECTION SCAFFOLD ─── */
+  .section {
+    padding: clamp(96px, 12vw, 160px) var(--pad);
+  }
+  .section.is-smoke { background: var(--smoke); }
+  .section.is-paper { background: var(--paper); }
 
-  .section-label {
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em;
-    color: var(--gold); text-transform: uppercase;
-    display: flex; align-items: center; gap: 16px; margin-bottom: 20px;
+  .section-head {
+    display: flex; flex-direction: column; gap: 12px; margin-bottom: 64px;
   }
-  .section-label::before {
-    content: ''; display: block; width: 30px; height: 1px; background: var(--gold);
+  .section-kicker {
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em;
+    color: var(--signal);
   }
-
-  h2.section-title {
-    font-family: var(--serif); font-size: clamp(36px, 4vw, 54px);
-    font-weight: 300; line-height: 1.15; letter-spacing: -0.01em;
-    color: var(--ink);
+  .section-title {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(36px, 5.4vw, 64px);
+    letter-spacing: -0.035em; line-height: 1.05;
+    max-width: 20ch;
   }
-  h2.section-title em { font-style: italic; color: var(--gold); }
+  .section-title em { font-style: normal; color: var(--signal); }
 
   /* ─── ABOUT ─── */
-  #about { padding: 140px 0; background: var(--paper); }
   .about-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
-    margin-top: 64px;
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(40px, 6vw, 96px);
+    align-items: start;
   }
   .about-text p {
-    font-size: 16px; color: var(--ink-mid); line-height: 1.9; margin-bottom: 20px;
-    font-weight: 300;
+    font-size: 17px; line-height: 1.7; margin-bottom: 20px; max-width: 60ch;
   }
-  .about-text p strong { color: var(--ink); font-weight: 500; }
+  .about-text strong { font-weight: 600; }
   .about-credentials {
-    border-top: 1px solid var(--rule); margin-top: 36px; padding-top: 36px;
-    display: flex; flex-direction: column; gap: 14px;
+    margin-top: 40px; display: flex; flex-direction: column; gap: 12px;
   }
   .credential {
-    display: flex; align-items: baseline; gap: 16px;
-    font-family: var(--mono); font-size: 12px;
+    display: grid; grid-template-columns: 80px 1fr; gap: 16px;
+    padding-bottom: 16px; border-bottom: 1px solid var(--line);
+    align-items: baseline;
   }
-  .credential-year { color: var(--gold); width: 40px; flex-shrink: 0; }
-  .credential-text { color: var(--ink-mid); }
-
-  .about-visual {
-    position: relative;
+  .credential-year {
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em;
+    color: var(--signal);
+  }
+  .credential-text {
+    font-family: var(--font-body); font-size: 15px; line-height: 1.5; color: var(--ink);
   }
   .about-card {
     background: var(--ink); color: var(--paper);
-    padding: 52px 44px; position: relative; overflow: hidden;
-  }
-  .about-card::before {
-    content: ''; position: absolute; top: 0; left: 0;
-    width: 3px; height: 100%; background: var(--gold);
+    border-radius: var(--radius-md); padding: 40px 32px;
+    position: sticky; top: 96px;
   }
   .about-card-name {
-    font-family: var(--serif); font-size: 32px; font-weight: 300;
-    letter-spacing: 0.04em; margin-bottom: 8px;
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 32px; letter-spacing: -0.03em; line-height: 1.05;
+    margin-bottom: 8px;
   }
+  .about-card-name .dot { color: var(--signal); }
   .about-card-title {
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
-    color: var(--gold); text-transform: uppercase; margin-bottom: 32px;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em;
+    color: var(--paper-muted); margin-bottom: 28px;
   }
-  .about-card-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .about-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
   .tag {
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em;
-    text-transform: uppercase; border: 1px solid rgba(255,255,255,0.15);
-    padding: 6px 12px; color: rgba(255,255,255,0.6); transition: all 0.2s;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em;
+    padding: 6px 12px; border-radius: 999px;
+    background: rgba(250,250,247,0.08); color: var(--paper);
   }
-  .tag:hover { border-color: var(--gold); color: var(--gold-lt); }
-  .about-card-accent {
-    position: absolute; bottom: -20px; right: -20px;
-    font-family: var(--serif); font-size: 120px; font-weight: 300;
-    color: rgba(184,154,90,0.08); line-height: 1; pointer-events: none;
-    letter-spacing: -0.05em;
-  }
-  .about-links { display: flex; gap: 16px; margin-top: 32px; }
+  .about-links { display: flex; flex-direction: column; gap: 12px; }
   .about-link {
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
-    text-transform: uppercase; color: rgba(255,255,255,0.5); text-decoration: none;
-    border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 2px;
-    transition: all 0.2s;
+    font-family: var(--font-display); font-weight: 500; font-size: 15px;
+    color: var(--paper); padding-bottom: 6px;
+    border-bottom: 1px solid rgba(250,250,247,0.18);
+    transition: border-color 0.2s, color 0.2s;
   }
-  .about-link:hover { color: var(--gold-lt); border-color: var(--gold); }
+  .about-link:hover { border-color: var(--signal); color: var(--signal); }
+  @media (max-width: 900px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .about-card { position: static; }
+  }
 
   /* ─── SERVICES ─── */
-  #services { padding: 140px 0; background: var(--paper-2); }
-  .services-header { max-width: 640px; margin-bottom: 80px; }
-  .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+  .services-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  }
   .service-card {
-    background: var(--paper); padding: 52px 44px;
-    border-top: 2px solid transparent;
-    transition: border-color 0.3s, background 0.3s;
+    background: var(--paper); border-radius: var(--radius-md);
+    padding: 40px 36px; display: flex; flex-direction: column; gap: 16px;
     position: relative; overflow: hidden;
   }
-  .service-card:hover { border-top-color: var(--gold); background: #fff; }
   .service-num {
-    font-family: var(--mono); font-size: 11px; color: var(--gold);
-    letter-spacing: 0.2em; margin-bottom: 28px; display: block;
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em;
+    color: var(--signal);
   }
-  .service-icon {
-    font-size: 28px; margin-bottom: 20px; display: block;
-    filter: grayscale(0.3);
+  .service-title {
+    font-family: var(--font-display); font-weight: 600;
+    font-size: clamp(22px, 2.4vw, 28px); letter-spacing: -0.02em; line-height: 1.2;
   }
-  h3.service-title {
-    font-family: var(--serif); font-size: 24px; font-weight: 400;
-    line-height: 1.3; margin-bottom: 16px; color: var(--ink);
+  .service-desc { font-size: 15px; line-height: 1.65; color: var(--muted); }
+  .service-deliverables {
+    list-style: none; padding: 0; margin-top: 8px;
+    display: flex; flex-direction: column; gap: 8px;
   }
-  .service-desc {
-    font-size: 14px; color: var(--ink-soft); line-height: 1.8;
-    margin-bottom: 28px;
-  }
-  .service-deliverables { list-style: none; }
   .service-deliverables li {
-    font-family: var(--mono); font-size: 11px; color: var(--ink-mid);
-    letter-spacing: 0.05em; padding: 7px 0;
-    border-bottom: 1px solid var(--rule);
-    display: flex; align-items: center; gap: 10px;
+    font-family: var(--font-body); font-size: 14px; line-height: 1.5; color: var(--ink);
+    padding-left: 20px; position: relative;
   }
-  .service-deliverables li::before { content: '—'; color: var(--gold); }
-  .service-card-bg {
-    position: absolute; bottom: 20px; right: 24px;
-    font-family: var(--serif); font-size: 80px; font-weight: 300;
-    color: var(--rule); line-height: 1; pointer-events: none;
+  .service-deliverables li::before {
+    content: ''; position: absolute; left: 0; top: 9px;
+    width: 6px; height: 6px; border-radius: 50%; background: var(--signal);
+  }
+  @media (max-width: 900px) {
+    .services-grid { grid-template-columns: 1fr; }
   }
 
   /* ─── PROJECTS ─── */
-  #projects { padding: 140px 0; background: var(--paper); }
-  .projects-header { max-width: 640px; margin-bottom: 80px; }
-  .projects-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
-
-  .project-card {
-    border: 1px solid var(--rule); padding: 44px 40px;
-    position: relative; overflow: hidden; transition: border-color 0.3s, box-shadow 0.3s;
-    text-decoration: none; display: block; color: inherit;
+  .work-list {
+    display: flex; flex-direction: column; gap: clamp(48px, 8vw, 96px);
   }
-  .project-card:hover {
-    border-color: var(--gold);
-    box-shadow: 0 8px 40px rgba(184,154,90,0.08);
+  .work-tile {
+    display: grid; grid-template-columns: 5fr 6fr; gap: clamp(32px, 6vw, 80px);
+    align-items: center;
   }
-  .project-status {
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
-    text-transform: uppercase; display: inline-flex; align-items: center; gap: 8px;
-    margin-bottom: 24px;
+  .work-tile.flip .work-thumb { order: 2; }
+  .work-thumb {
+    background: var(--ink); color: var(--paper);
+    border-radius: var(--radius-md);
+    aspect-ratio: 4 / 3;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden; padding: 40px;
   }
+  .work-thumb.is-smoke { background: var(--smoke); color: var(--ink); }
+  .work-thumb.is-toplisters { background: #1F6FEB; color: #F6F4EE; }
+  .work-thumb.is-toplisters .work-status { color: rgba(246,244,238,0.75); }
+  .work-thumb.is-toplisters .status-dot.is-live { background: #D4F564; box-shadow: 0 0 0 3px rgba(212,245,100,0.18); }
+  .work-thumb-title {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(40px, 6vw, 80px);
+    letter-spacing: -0.035em; line-height: 1;
+    text-align: center;
+  }
+  .work-thumb-title .dot { color: var(--signal); }
+  .toplisters-brand {
+    display: flex; flex-direction: column; align-items: center; gap: 22px;
+  }
+  .toplisters-mark {
+    width: clamp(90px, 14vw, 140px); height: auto; display: block;
+  }
+  .toplisters-word {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(40px, 6vw, 72px);
+    letter-spacing: -0.04em; line-height: 1;
+    color: #F6F4EE;
+  }
+  .toplisters-word .dot { color: #D4F564; }
+  .work-status {
+    position: absolute; top: 20px; left: 20px;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em;
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--paper-muted);
+  }
+  .work-thumb.is-smoke .work-status { color: var(--muted); }
   .status-dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    animation: pulse 2s ease-in-out infinite;
+    width: 6px; height: 6px; border-radius: 50%; background: var(--muted);
   }
-  .status-dot.live { background: #2ecc71; }
-  .status-dot.building { background: var(--gold); }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; } 50% { opacity: 0.3; }
-  }
-  .status-live { color: #2ecc71; }
-  .status-building { color: var(--gold); }
+  .status-dot.is-live { background: var(--signal); }
 
-  a.project-card { color: inherit; text-decoration: none; }
-
-  h3.project-title {
-    font-family: var(--serif); font-size: 26px; font-weight: 400;
-    line-height: 1.25; margin-bottom: 12px;
+  .work-meta {
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em;
+    color: var(--muted); margin-bottom: 16px;
   }
-  .project-sector {
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
-    color: var(--gold); text-transform: uppercase; margin-bottom: 16px;
+  .work-title {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(28px, 3.6vw, 42px); letter-spacing: -0.03em; line-height: 1.1;
+    margin-bottom: 16px;
   }
-  .project-desc { font-size: 14px; color: var(--ink-soft); line-height: 1.8; margin-bottom: 24px; }
-  .project-tech { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  .work-desc {
+    font-size: 16px; line-height: 1.65; color: var(--ink);
+    margin-bottom: 20px; max-width: 42ch;
+  }
+  .work-tech { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; }
   .tech-badge {
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
-    background: var(--paper-2); color: var(--ink-mid);
-    padding: 4px 10px; border-radius: 2px;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.04em;
+    padding: 4px 10px; border-radius: 999px;
+    background: var(--smoke); color: var(--muted);
   }
-  .project-cta {
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.15em;
-    text-transform: uppercase; color: var(--gold);
-    display: flex; align-items: center; gap: 8px; transition: gap 0.2s;
+  .work-links { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+  .work-link {
+    font-family: var(--font-display); font-weight: 600; font-size: 15px;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding-bottom: 4px; border-bottom: 1px solid var(--ink);
+    transition: gap 0.2s, border-color 0.2s;
   }
-  .project-card:hover .project-cta { gap: 14px; }
-  .project-card-num {
-    position: absolute; top: 28px; right: 32px;
-    font-family: var(--serif); font-size: 60px; font-weight: 300;
-    color: var(--rule); line-height: 1;
+  .work-link:hover { gap: 14px; border-color: var(--signal); }
+  .work-link.is-secondary {
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em;
+    color: var(--muted); border-bottom-color: var(--line);
   }
-
-  /* SAAS TEASER */
-  .saas-teaser {
-    grid-column: 1 / -1;
-    background: var(--ink); padding: 56px 52px;
-    display: flex; align-items: center; justify-content: space-between; gap: 40px;
-    border: none; position: relative; overflow: hidden;
+  .work-link.is-secondary:hover { color: var(--ink); border-bottom-color: var(--ink); }
+  @media (max-width: 800px) {
+    .work-tile, .work-tile.flip { grid-template-columns: 1fr; }
+    .work-tile.flip .work-thumb { order: 0; }
   }
-  .saas-teaser::before {
-    content: ''; position: absolute; inset: 0;
-    background: linear-gradient(135deg, transparent 60%, rgba(184,154,90,0.06));
-  }
-  .saas-teaser-text h3 {
-    font-family: var(--serif); font-size: 28px; font-weight: 300;
-    color: var(--paper); margin-bottom: 10px;
-  }
-  .saas-teaser-text p { font-size: 14px; color: rgba(255,255,255,0.45); max-width: 480px; }
-  .saas-teaser-cta {
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
-    text-transform: uppercase; border: 1px solid rgba(255,255,255,0.2);
-    color: rgba(255,255,255,0.7); padding: 14px 28px; text-decoration: none;
-    transition: all 0.25s; white-space: nowrap; flex-shrink: 0;
-  }
-  .saas-teaser-cta:hover { border-color: var(--gold); color: var(--gold-lt); }
 
   /* ─── PROCESS ─── */
-  #process { padding: 140px 0; background: var(--ink); }
-  #process .section-label { color: var(--gold); }
-  #process .section-title { color: var(--paper); }
-  .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 64px; }
+  .process-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+  }
   .process-step {
-    padding: 44px 36px; border-right: 1px solid rgba(255,255,255,0.06);
-    transition: background 0.3s;
+    display: flex; flex-direction: column; gap: 16px;
+    padding: 32px 24px 32px 0;
+    border-right: 1px solid var(--line);
   }
   .process-step:last-child { border-right: none; }
-  .process-step:hover { background: rgba(255,255,255,0.02); }
-  .process-step-num {
-    font-family: var(--serif); font-size: 48px; font-weight: 300;
-    color: rgba(184,154,90,0.3); line-height: 1; margin-bottom: 20px; display: block;
+  .process-num {
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em;
+    color: var(--signal);
   }
-  h3.process-title {
-    font-family: var(--serif); font-size: 20px; font-weight: 400;
-    color: var(--paper); margin-bottom: 12px;
+  .process-title {
+    font-family: var(--font-display); font-weight: 600;
+    font-size: clamp(22px, 2vw, 26px); letter-spacing: -0.02em; line-height: 1.2;
   }
-  .process-desc { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.8; }
+  .process-desc { font-size: 14px; line-height: 1.65; color: var(--muted); }
+  @media (max-width: 900px) {
+    .process-grid { grid-template-columns: 1fr 1fr; }
+    .process-step:nth-child(2n) { border-right: none; }
+  }
+  @media (max-width: 560px) {
+    .process-grid { grid-template-columns: 1fr; }
+    .process-step { border-right: none; border-bottom: 1px solid var(--line); padding: 24px 0; }
+    .process-step:last-child { border-bottom: none; }
+  }
 
   /* ─── CONTACT ─── */
-  #contact { padding: 140px 0; background: var(--paper); }
-  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; margin-top: 64px; align-items: start; }
-  .contact-info h3 {
-    font-family: var(--serif); font-size: 28px; font-weight: 300; margin-bottom: 16px;
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1.2fr; gap: clamp(40px, 6vw, 80px);
+    align-items: start;
   }
-  .contact-info p { font-size: 15px; color: var(--ink-soft); line-height: 1.8; margin-bottom: 36px; }
+  .contact-info h3 {
+    font-family: var(--font-display); font-weight: 600;
+    font-size: clamp(22px, 2.4vw, 28px); letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .contact-info p {
+    font-size: 16px; line-height: 1.65; color: var(--muted); max-width: 36ch;
+    margin-bottom: 32px;
+  }
   .contact-details { display: flex; flex-direction: column; gap: 16px; }
   .contact-detail {
-    display: flex; gap: 20px; align-items: baseline;
-    font-size: 14px;
+    display: grid; grid-template-columns: 100px 1fr; gap: 16px;
+    padding-bottom: 14px; border-bottom: 1px solid var(--line);
+    align-items: baseline;
   }
   .contact-detail-label {
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
-    color: var(--gold); text-transform: uppercase; width: 80px; flex-shrink: 0;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em;
+    color: var(--muted);
   }
-  .contact-detail a { color: var(--ink-mid); text-decoration: none; transition: color 0.2s; }
-  .contact-detail a:hover { color: var(--gold); }
+  .contact-detail a, .contact-detail span {
+    font-family: var(--font-display); font-weight: 500; font-size: 16px;
+    color: var(--ink);
+  }
+  .contact-detail a:hover { color: var(--signal); }
 
-  /* FORM */
-  .contact-form { display: flex; flex-direction: column; gap: 24px; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .contact-form {
+    background: var(--smoke); border-radius: var(--radius-md);
+    padding: 40px;
+    display: flex; flex-direction: column; gap: 20px;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .form-group { display: flex; flex-direction: column; gap: 8px; }
   .form-group label {
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
-    color: var(--ink-soft); text-transform: uppercase;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em;
+    color: var(--muted);
   }
-  .form-group input,
-  .form-group select,
-  .form-group textarea {
-    background: transparent; border: none; border-bottom: 1px solid var(--rule);
-    padding: 12px 0; font-family: var(--sans); font-size: 14px; font-weight: 300;
-    color: var(--ink); outline: none; transition: border-color 0.2s;
-    width: 100%; appearance: none;
+  .form-group input, .form-group select, .form-group textarea {
+    font-family: var(--font-body); font-size: 15px;
+    background: var(--paper); color: var(--ink);
+    border: 1px solid var(--line); border-radius: var(--radius-sm);
+    padding: 12px 14px; line-height: 1.4;
+    transition: border-color 0.2s ease;
   }
-  .form-group input:focus,
-  .form-group select:focus,
-  .form-group textarea:focus { border-bottom-color: var(--gold); }
-  .form-group textarea { resize: vertical; min-height: 100px; }
-  .form-group select { background: var(--paper); cursor: pointer; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    outline: none; border-color: var(--signal);
+  }
+  .form-group textarea { min-height: 140px; resize: vertical; }
   .form-submit {
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
-    text-transform: uppercase; background: var(--ink); color: var(--paper);
-    border: none; padding: 18px 40px; cursor: pointer;
-    transition: background 0.25s; align-self: flex-start;
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    height: 56px; padding: 0 28px; border: none; border-radius: 999px;
+    background: var(--signal); color: var(--ink);
+    font-family: var(--font-display); font-weight: 600; font-size: 17px;
+    letter-spacing: -0.01em; cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    align-self: flex-start;
   }
-  .form-submit:hover { background: var(--gold); }
+  .form-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,91,46,0.3); }
   .form-msg {
-    font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em;
-    padding: 14px 20px;
+    padding: 14px 18px; border-radius: var(--radius-sm);
+    font-family: var(--font-body); font-size: 14px; line-height: 1.5;
   }
-  .form-msg.success { background: rgba(46,204,113,0.08); color: #2ecc71; border-left: 2px solid #2ecc71; }
-  .form-msg.error { background: rgba(231,76,60,0.08); color: #e74c3c; border-left: 2px solid #e74c3c; }
+  .form-msg.success { background: rgba(255,91,46,0.08); color: var(--ink); border: 1px solid var(--signal); }
+  .form-msg.error   { background: rgba(14,14,16,0.04); color: var(--ink); border: 1px solid var(--line); }
+  @media (max-width: 900px) {
+    .contact-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .contact-form { padding: 28px; }
+  }
 
   /* ─── FOOTER ─── */
-  footer {
-    background: var(--ink); padding: 56px 60px;
-    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;
+  .footer {
+    background: var(--ink); color: var(--paper);
+    padding: clamp(96px, 12vw, 160px) var(--pad) 48px;
   }
-  .footer-logo {
-    font-family: var(--serif); font-size: 20px; font-weight: 300;
-    letter-spacing: 0.1em; color: var(--paper);
-    display: flex; align-items: center; gap: 12px;
-    text-decoration: none;
+  .footer-lead {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(48px, 8vw, 120px);
+    letter-spacing: -0.04em; line-height: 0.95;
+    margin-bottom: 48px; max-width: 18ch;
   }
-  .footer-copy {
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em;
-    color: rgba(255,255,255,0.3); text-align: center;
+  .footer-lead .dot { color: var(--signal); }
+  .footer-email {
+    font-family: var(--font-display); font-weight: 500;
+    font-size: clamp(22px, 3vw, 36px); letter-spacing: -0.02em;
+    display: inline-block; padding-bottom: 8px;
+    border-bottom: 1px solid var(--paper-muted);
+    transition: border-color 0.2s ease;
   }
-  .footer-links { display: flex; gap: 28px; }
-  .footer-links a {
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em;
-    text-transform: uppercase; color: rgba(255,255,255,0.35); text-decoration: none;
-    transition: color 0.2s;
+  .footer-email:hover { border-bottom-color: var(--signal); }
+  .footer-socials {
+    display: flex; gap: 28px; margin-top: 40px;
+    font-family: var(--font-display); font-weight: 500; font-size: 17px;
   }
-  .footer-links a:hover { color: var(--gold); }
+  .footer-socials a {
+    padding-bottom: 4px; border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+  .footer-socials a:hover { border-bottom-color: var(--signal); }
+  .footer-bottom {
+    display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+    margin-top: clamp(80px, 12vw, 140px); padding-top: 32px;
+    border-top: 1px solid rgba(250,250,247,0.12);
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em;
+    color: var(--paper-muted);
+  }
 
-  /* ─── ANIMATIONS ─── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; transform: translateY(0); }
+  /* ─── CURSOR DOT ─── */
+  .cursor-dot {
+    position: fixed; top: 0; left: 0;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--signal); pointer-events: none; z-index: 100;
+    transform: translate3d(-100px, -100px, 0);
+    transition: transform 80ms linear, opacity 0.2s ease;
+    mix-blend-mode: difference;
   }
-  .reveal {
-    opacity: 0; transform: translateY(30px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
+  @media (hover: none), (pointer: coarse) {
+    .cursor-dot { display: none; }
   }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
 
-  /* ─── RESPONSIVE ─── */
-  @media (max-width: 900px) {
-    nav { padding: 20px 28px; }
-    nav.scrolled { padding: 14px 28px; }
-    .nav-links { display: none; }
-    #hero { padding: 100px 28px 60px; }
-    .hero-grid-line { display: none; }
-    .hero-stats { position: static; margin-top: 48px; justify-content: flex-start; }
-    .section-inner { padding: 0 28px; }
-    .about-grid, .services-grid, .projects-grid,
-    .contact-grid, .process-grid { grid-template-columns: 1fr !important; }
-    .saas-teaser { flex-direction: column; }
-    .form-row { grid-template-columns: 1fr; }
-    footer { flex-direction: column; text-align: center; padding: 40px 28px; }
-    .process-step { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  /* ─── REDUCE MOTION ─── */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+    .wordmark .dot, .wordmark .suffix { animation: none; }
+    .cursor-dot { display: none; }
+  }
+
+  .sr-only {
+    position: absolute; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }
+
+  /* ─── COOKIE NOTICE ─── */
+  .cookie-bar {
+    position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+    z-index: 60; max-width: calc(100% - 32px);
+    background: var(--ink); color: var(--paper);
+    border: 1px solid rgba(250,250,247,0.12);
+    border-radius: 999px;
+    padding: 10px 10px 10px 20px;
+    display: none; align-items: center; gap: 16px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+  }
+  .cookie-bar.is-visible { display: inline-flex; }
+  .cookie-bar p {
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em;
+    color: var(--paper-muted); margin: 0; white-space: nowrap;
+  }
+  .cookie-bar .dot { color: var(--signal); }
+  .cookie-bar button {
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em;
+    background: var(--signal); color: var(--ink);
+    border: none; padding: 8px 16px; border-radius: 999px;
+    cursor: pointer; transition: transform 0.2s ease;
+  }
+  .cookie-bar button:hover { transform: translateY(-1px); }
+  @media (max-width: 640px) {
+    .cookie-bar {
+      border-radius: var(--radius-md);
+      padding: 14px 14px 14px 18px;
+      gap: 12px;
+      left: 16px; right: 16px; transform: none;
+      max-width: none;
+    }
+    .cookie-bar p { font-size: 11px; white-space: normal; line-height: 1.4; flex: 1; }
+    .cookie-bar button { white-space: nowrap; flex-shrink: 0; }
   }
 </style>
 
-<!-- Structured Data -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  "name": "Ainika",
+  "name": "ainika.",
   "url": "https://ainika.xyz",
-  "description": "AI-Powered Products. Human-Centred Strategy. Product consulting, AI/ML strategy, and data products.",
+  "description": "AI-powered products and human-centred strategy. Product consulting, AI/ML strategy, business analysis, and data product consulting.",
   "founder": {
     "@type": "Person",
     "name": "Josen Joy",
@@ -764,486 +702,414 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
 </head>
 <body>
 
-<div class="cursor-dot" id="cursorDot"></div>
-<div class="cursor-ring" id="cursorRing"></div>
+<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
 
-<!-- ─── NAV ─── -->
-<nav id="mainNav">
-  <a href="#hero" class="nav-logo" aria-label="Ainika home">
-    <svg class="ainika-mark" viewBox="0 0 32 32" aria-hidden="true">
-      <rect class="box" x="2" y="2" width="28" height="28"/>
-      <path class="chev" d="M16 8 L8 26 M16 8 L24 26"/>
-    </svg>
-    Ainika
-  </a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <a href="#contact" class="nav-cta">Enquire</a>
+<nav class="nav" id="nav" aria-label="primary">
+  <a href="#top" class="nav-wordmark" aria-label="ainika.">ainika<span class="dot">.</span></a>
+  <div class="nav-links">
+    <a href="#about">about</a>
+    <a href="#services">services</a>
+    <a href="#projects">projects</a>
+    <a href="/blog/">writing</a>
+    <a href="#contact" class="nav-cta">start a conversation</a>
+  </div>
 </nav>
 
-<!-- ─── HERO ─── -->
-<section id="hero">
-  <div class="hero-grid-line"></div>
-  <div class="hero-grid-line"></div>
-  <div class="hero-grid-line"></div>
-
-  <div class="hero-eyebrow">AI Products &amp; Consulting</div>
-
-  <h1 class="hero-title">
-    AI&#8209;Powered Products.<br>
-    <em>Human&#8209;Centred</em> Strategy.
-  </h1>
-
-  <p class="hero-tagline">
-    Helping startups and enterprises translate data science into products that ship, scale, and matter.
-  </p>
-
+<section class="hero" id="top">
+  <div class="hero-kicker">ainika · ai products &amp; consulting</div>
+  <div class="wordmark" aria-label="ainika."><span>ai</span><span class="suffix">nika</span><span class="dot">.</span></div>
+  <h1 class="hero-sub">AI-powered products<span class="dot" style="color:var(--signal)">.</span><br><em>Human-centred</em> strategy<span class="dot" style="color:var(--signal)">.</span></h1>
+  <p class="hero-tagline">Helping startups and enterprises translate data science into products that ship, scale, and matter.</p>
   <div class="hero-actions">
-    <a href="#services" class="btn-primary">Our Services</a>
-    <a href="#projects" class="btn-ghost">View Projects</a>
+    <a href="#services" class="cta-pill">our services <span class="arrow">→</span></a>
+    <a href="#projects" class="cta-ghost">view projects</a>
   </div>
-
-  <div class="hero-scroll-hint">Scroll</div>
-
   <div class="hero-stats">
-    <div class="stat-item">
-      <span class="stat-num">10+</span>
-      <span class="stat-label">Years Experience</span>
+    <div>
+      <span class="stat-num">10+<span class="dot">.</span></span>
+      <span class="stat-label">years experience</span>
     </div>
-    <div class="stat-item">
-      <span class="stat-num">6</span>
-      <span class="stat-label">Countries Delivered</span>
+    <div>
+      <span class="stat-num">6<span class="dot">.</span></span>
+      <span class="stat-label">countries delivered</span>
     </div>
-    <div class="stat-item">
-      <span class="stat-num">350k</span>
-      <span class="stat-label">Users Served</span>
-    </div>
-  </div>
-</section>
-
-<!-- ─── ABOUT ─── -->
-<section id="about">
-  <div class="section-inner">
-    <div class="section-label">Who We Are</div>
-    <h2 class="section-title">Product thinking<br>meets <em>data science</em></h2>
-
-    <div class="about-grid">
-      <div class="about-text reveal">
-        <p>Ainika is the consulting practice of <strong>Josen Joy</strong> — a Senior Product Owner and Business Analyst with over a decade of experience building AI/ML and SaaS products across fintech, enterprise automation, and digital transformation.</p>
-        <p>With an <strong>MSc in Data Science &amp; Computational Intelligence</strong> from Coventry University, Josen bridges a gap that rarely gets bridged: deep technical literacy in machine learning alongside the product and stakeholder skills to actually ship things.</p>
-        <p>We work with startups that need a sharp product mind, and enterprises navigating AI transformation that want someone who can talk to both the data science team and the C-suite.</p>
-
-        <div class="about-credentials">
-          <div class="credential">
-            <span class="credential-year">2026</span>
-            <span class="credential-text">MSc Data Science &amp; Computational Intelligence — Coventry University</span>
-          </div>
-          <div class="credential">
-            <span class="credential-year">2024</span>
-            <span class="credential-text">SAFe 5 Certified Product Owner / Product Manager</span>
-          </div>
-          <div class="credential">
-            <span class="credential-year">2024</span>
-            <span class="credential-text">Senior Product Owner — Publicis Re:Sources (AI/ML Accounts Payable platform)</span>
-          </div>
-          <div class="credential">
-            <span class="credential-year">2021</span>
-            <span class="credential-text">Product Owner — Digital Transformation &amp; Data Products (Equifax, RM plc)</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="about-visual reveal">
-        <div class="about-card">
-          <div class="about-card-name">Josen Joy</div>
-          <div class="about-card-title">Founder · Product Owner · AI/ML Strategist</div>
-          <div class="about-card-tags">
-            <span class="tag">AI/ML Products</span>
-            <span class="tag">Data Science</span>
-            <span class="tag">FinTech</span>
-            <span class="tag">SAFe Agile</span>
-            <span class="tag">Motorsport</span>
-            <span class="tag">MedTech</span>
-            <span class="tag">Python</span>
-            <span class="tag">Power BI</span>
-            <span class="tag">Azure DevOps</span>
-          </div>
-          <div class="about-links">
-            <a href="https://linkedin.com/in/josenjoy" target="_blank" class="about-link">LinkedIn</a>
-            <a href="https://github.com/ainikaventures" target="_blank" class="about-link">GitHub</a>
-            <a href="mailto:hello@ainika.xyz" class="about-link">hello@ainika.xyz</a>
-          </div>
-          <div class="about-card-accent">A</div>
-        </div>
-      </div>
+    <div>
+      <span class="stat-num">350k<span class="dot">.</span></span>
+      <span class="stat-label">users served</span>
     </div>
   </div>
 </section>
 
-<!-- ─── SERVICES ─── -->
-<section id="services">
-  <div class="section-inner">
-    <div class="services-header reveal">
-      <div class="section-label">What We Do</div>
-      <h2 class="section-title">Four ways we<br>can <em>work together</em></h2>
-    </div>
+<section class="section is-paper" id="about">
+  <div class="section-head">
+    <span class="section-kicker">§ who we are</span>
+    <h2 class="section-title">Product thinking<br>meets <em>data science</em>.</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>ainika. is the consulting practice of <strong>Josen Joy</strong> — a Senior Product Owner and Business Analyst with over a decade of experience building AI/ML and SaaS products across fintech, enterprise automation, and digital transformation.</p>
+      <p>With an <strong>MSc in Data Science &amp; Computational Intelligence</strong> from Coventry University, Josen bridges a gap that rarely gets bridged: deep technical literacy in machine learning alongside the product and stakeholder skills to actually ship things.</p>
+      <p>We work with startups that need a sharp product mind, and enterprises navigating AI transformation that want someone who can talk to both the data science team and the C-suite.</p>
 
-    <div class="services-grid">
-      <div class="service-card reveal">
-        <span class="service-num">01</span>
-        <span class="service-icon">🧠</span>
-        <h3 class="service-title">AI/ML Product Strategy &amp; Roadmapping</h3>
-        <p class="service-desc">Turn your data science capability into a product. We define what to build, in what order, and how to measure success — bridging ML teams and business stakeholders.</p>
-        <ul class="service-deliverables">
-          <li>AI product vision &amp; opportunity assessment</li>
-          <li>Model-to-product integration roadmap</li>
-          <li>ML feature prioritisation framework</li>
-          <li>Stakeholder alignment workshops</li>
-        </ul>
-        <div class="service-card-bg">01</div>
-      </div>
-
-      <div class="service-card reveal">
-        <span class="service-num">02</span>
-        <span class="service-icon">📐</span>
-        <h3 class="service-title">Business Analysis &amp; Requirements Engineering</h3>
-        <p class="service-desc">Precise, unambiguous requirements that development teams can actually build from. From discovery to acceptance criteria — no gaps, no surprises.</p>
-        <ul class="service-deliverables">
-          <li>BRD / FRD documentation</li>
-          <li>User story mapping &amp; backlog creation</li>
-          <li>Process design &amp; gap analysis</li>
-          <li>UAT planning &amp; sign-off support</li>
-        </ul>
-        <div class="service-card-bg">02</div>
-      </div>
-
-      <div class="service-card reveal">
-        <span class="service-num">03</span>
-        <span class="service-icon">📊</span>
-        <h3 class="service-title">Data Product Consulting</h3>
-        <p class="service-desc">From raw data to a product people pay for. We help you design the data layer, the product experience, and the commercial model — with real technical depth.</p>
-        <ul class="service-deliverables">
-          <li>Data product architecture &amp; scoping</li>
-          <li>ETL workflow &amp; pipeline review</li>
-          <li>BI &amp; analytics product design</li>
-          <li>API integration strategy</li>
-        </ul>
-        <div class="service-card-bg">03</div>
-      </div>
-
-      <div class="service-card reveal">
-        <span class="service-num">04</span>
-        <span class="service-icon">⚡</span>
-        <h3 class="service-title">Fractional Product Owner</h3>
-        <p class="service-desc">A senior PO embedded in your team on a part-time basis. Ideal for early-stage startups that need product leadership without a full-time hire.</p>
-        <ul class="service-deliverables">
-          <li>Sprint planning &amp; backlog grooming</li>
-          <li>Stakeholder management</li>
-          <li>Product metrics &amp; KPI definition</li>
-          <li>Agile ceremony facilitation</li>
-        </ul>
-        <div class="service-card-bg">04</div>
+      <div class="about-credentials">
+        <div class="credential">
+          <span class="credential-year">2026</span>
+          <span class="credential-text">MSc Data Science &amp; Computational Intelligence — Coventry University</span>
+        </div>
+        <div class="credential">
+          <span class="credential-year">2024</span>
+          <span class="credential-text">SAFe 5 Certified Product Owner / Product Manager</span>
+        </div>
+        <div class="credential">
+          <span class="credential-year">2024</span>
+          <span class="credential-text">Senior Product Owner — Publicis Re:Sources (AI/ML accounts-payable platform)</span>
+        </div>
+        <div class="credential">
+          <span class="credential-year">2021</span>
+          <span class="credential-text">Product Owner — digital transformation &amp; data products (Equifax, RM plc)</span>
+        </div>
       </div>
     </div>
+
+    <aside class="about-card">
+      <div class="about-card-name">Josen Joy<span class="dot">.</span></div>
+      <div class="about-card-title">founder · product owner · ai/ml strategist</div>
+      <div class="about-tags">
+        <span class="tag">AI/ML</span>
+        <span class="tag">Data Science</span>
+        <span class="tag">FinTech</span>
+        <span class="tag">SAFe Agile</span>
+        <span class="tag">Motorsport</span>
+        <span class="tag">MedTech</span>
+        <span class="tag">Python</span>
+        <span class="tag">Power BI</span>
+        <span class="tag">Azure DevOps</span>
+      </div>
+      <div class="about-links">
+        <a href="https://linkedin.com/in/josenjoy" target="_blank" rel="noopener" class="about-link">linkedin ↗</a>
+        <a href="https://github.com/ainikaventures" target="_blank" rel="noopener" class="about-link">github ↗</a>
+        <a href="mailto:hello@ainika.xyz" class="about-link">hello@ainika.xyz</a>
+      </div>
+    </aside>
   </div>
 </section>
 
-<!-- ─── PROJECTS ─── -->
-<section id="projects">
-  <div class="section-inner">
-    <div class="projects-header reveal">
-      <div class="section-label">Our Work</div>
-      <h2 class="section-title">Products built.<br><em>Problems solved.</em></h2>
-    </div>
+<section class="section is-smoke" id="services">
+  <div class="section-head">
+    <span class="section-kicker">§ what we do</span>
+    <h2 class="section-title">Four ways we<br>can <em>work together</em>.</h2>
+  </div>
+  <div class="services-grid">
+    <article class="service-card">
+      <span class="service-num">01 · strategy</span>
+      <h3 class="service-title">AI/ML Product Strategy &amp; Roadmapping</h3>
+      <p class="service-desc">Turn your data science capability into a product. We define what to build, in what order, and how to measure success — bridging ML teams and business stakeholders.</p>
+      <ul class="service-deliverables">
+        <li>AI product vision &amp; opportunity assessment</li>
+        <li>Model-to-product integration roadmap</li>
+        <li>ML feature prioritisation framework</li>
+        <li>Stakeholder alignment workshops</li>
+      </ul>
+    </article>
 
-    <div class="projects-grid">
+    <article class="service-card">
+      <span class="service-num">02 · requirements</span>
+      <h3 class="service-title">Business Analysis &amp; Requirements Engineering</h3>
+      <p class="service-desc">Precise, unambiguous requirements that development teams can actually build from. From discovery to acceptance criteria — no gaps, no surprises.</p>
+      <ul class="service-deliverables">
+        <li>BRD / FRD documentation</li>
+        <li>User story mapping &amp; backlog creation</li>
+        <li>Process design &amp; gap analysis</li>
+        <li>UAT planning &amp; sign-off support</li>
+      </ul>
+    </article>
 
-      <a href="https://github.com/ainikaventures/toplisters" target="_blank" class="project-card reveal">
-        <div class="project-card-num">01</div>
-        <div class="project-status status-building">
-          <span class="status-dot building"></span>In Development
-        </div>
-        <div class="project-sector">Job Market · Intelligence Platform</div>
-        <h3 class="project-title">TopListers</h3>
-        <p class="project-desc">Privacy-first job market intelligence platform. Track applications via a Kanban board, submit anonymous job sightings, and explore global hiring trends with heatmaps and trend charts — all without compromising your privacy.</p>
-        <div class="project-tech">
+    <article class="service-card">
+      <span class="service-num">03 · data</span>
+      <h3 class="service-title">Data Product Consulting</h3>
+      <p class="service-desc">From raw data to a product people pay for. We help you design the data layer, the product experience, and the commercial model — with real technical depth.</p>
+      <ul class="service-deliverables">
+        <li>Data product architecture &amp; scoping</li>
+        <li>ETL workflow &amp; pipeline review</li>
+        <li>BI &amp; analytics product design</li>
+        <li>API integration strategy</li>
+      </ul>
+    </article>
+
+    <article class="service-card">
+      <span class="service-num">04 · embedded</span>
+      <h3 class="service-title">Fractional Product Owner</h3>
+      <p class="service-desc">A senior PO embedded in your team part-time. Ideal for early-stage startups that need product leadership without a full-time hire.</p>
+      <ul class="service-deliverables">
+        <li>Sprint planning &amp; backlog grooming</li>
+        <li>Stakeholder management</li>
+        <li>Product metrics &amp; KPI definition</li>
+        <li>Agile ceremony facilitation</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<section class="section is-paper" id="projects">
+  <div class="section-head">
+    <span class="section-kicker">§ selected work</span>
+    <h2 class="section-title">Products built.<br><em>Problems solved.</em></h2>
+  </div>
+  <div class="work-list">
+
+    <article class="work-tile">
+      <a class="work-thumb is-toplisters" href="https://toplisters.xyz" target="_blank" rel="noopener" aria-label="Visit TopListers">
+        <span class="work-status"><span class="status-dot is-live"></span>100k+ live jobs</span>
+        <span class="toplisters-brand">
+          <svg class="toplisters-mark" viewBox="0 0 68 68" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="0" y="0" width="68" height="68" rx="14" fill="#0E1116"/>
+            <rect x="14" y="16" width="40" height="8" rx="2" fill="#1F6FEB"/>
+            <rect x="14" y="30" width="28" height="8" rx="2" fill="#F6F4EE" fill-opacity="0.85"/>
+            <rect x="14" y="44" width="20" height="8" rx="2" fill="#F6F4EE" fill-opacity="0.55"/>
+          </svg>
+          <span class="toplisters-word">toplisters<span class="dot">.</span></span>
+        </span>
+      </a>
+      <div class="work-copy">
+        <div class="work-meta">2025 · job market intelligence</div>
+        <h3 class="work-title">TopListers</h3>
+        <p class="work-desc">Privacy-first job market intelligence. Track applications on a Kanban board, share anonymous job sightings, and explore global hiring trends with heatmaps and trend charts. 100,000+ live jobs, hand-checked every morning.</p>
+        <div class="work-tech">
           <span class="tech-badge">Python</span>
           <span class="tech-badge">FastAPI</span>
           <span class="tech-badge">React</span>
           <span class="tech-badge">Supabase</span>
           <span class="tech-badge">Adzuna API</span>
         </div>
-        <div class="project-cta">Follow Progress on GitHub →</div>
-      </a>
-
-      <a href="https://github.com/ainikaventures/splitai" target="_blank" class="project-card reveal">
-        <div class="project-card-num">02</div>
-        <div class="project-status status-building">
-          <span class="status-dot building"></span>In Development
+        <div class="work-links">
+          <a class="work-link" href="https://toplisters.xyz" target="_blank" rel="noopener">visit toplisters <span aria-hidden="true">→</span></a>
+          <a class="work-link is-secondary" href="/blog/toplisters-100k.html">read the 100k story ↗</a>
+          <a class="work-link is-secondary" href="https://github.com/ainikaventures/toplisters" target="_blank" rel="noopener">github ↗</a>
         </div>
-        <div class="project-sector">FinTech · Expense Management</div>
-        <h3 class="project-title">SplitAI</h3>
-        <p class="project-desc">A smart expense splitting app that takes the awkwardness out of shared costs. Built with Flutter for iOS and Android, with a PHP backend — designed to make splitting bills effortless without ever asking for money.</p>
-        <div class="project-tech">
+      </div>
+    </article>
+
+    <article class="work-tile flip">
+      <a class="work-thumb is-smoke" href="https://github.com/ainikaventures/splitai" target="_blank" rel="noopener" aria-label="SplitAI on GitHub">
+        <span class="work-status"><span class="status-dot"></span>in development</span>
+        <span class="work-thumb-title">split<br>ai<span class="dot">.</span></span>
+      </a>
+      <div class="work-copy">
+        <div class="work-meta">2025 · fintech · mobile</div>
+        <h3 class="work-title">SplitAI</h3>
+        <p class="work-desc">A smart expense-splitting app that takes the awkwardness out of shared costs. Built with Flutter for iOS and Android, with a PHP backend — designed to never ask for money.</p>
+        <div class="work-tech">
           <span class="tech-badge">Flutter</span>
           <span class="tech-badge">Dart</span>
           <span class="tech-badge">PHP</span>
           <span class="tech-badge">iOS</span>
           <span class="tech-badge">Android</span>
         </div>
-        <div class="project-cta">Follow Progress on GitHub →</div>
-      </a>
-
-      <a href="https://github.com/ainikaventures/2048" target="_blank" class="project-card reveal">
-        <div class="project-card-num">03</div>
-        <div class="project-status status-building">
-          <span class="status-dot building"></span>In Development
+        <div class="work-links">
+          <a class="work-link" href="https://github.com/ainikaventures/splitai" target="_blank" rel="noopener">view on github <span aria-hidden="true">→</span></a>
         </div>
-        <div class="project-sector">Gaming · Mobile App</div>
-        <h3 class="project-title">2048 by Ainika</h3>
-        <p class="project-desc">A beautifully crafted reimagination of the classic 2048 puzzle game. Features custom tile icons from your photo gallery, multiple themes, smooth animations, and fully offline play — built with Flutter for iOS and Android.</p>
-        <div class="project-tech">
+      </div>
+    </article>
+
+    <article class="work-tile">
+      <a class="work-thumb" href="https://github.com/ainikaventures/2048" target="_blank" rel="noopener" aria-label="2048 by Ainika on GitHub">
+        <span class="work-status"><span class="status-dot"></span>in development</span>
+        <span class="work-thumb-title">2048<span class="dot">.</span></span>
+      </a>
+      <div class="work-copy">
+        <div class="work-meta">2025 · gaming · mobile</div>
+        <h3 class="work-title">2048 by Ainika</h3>
+        <p class="work-desc">A reimagined 2048 puzzle. Custom tile icons from your photo gallery, multiple themes, smooth animations, and fully offline play — built with Flutter for iOS and Android.</p>
+        <div class="work-tech">
           <span class="tech-badge">Flutter</span>
           <span class="tech-badge">Dart</span>
           <span class="tech-badge">Provider</span>
           <span class="tech-badge">iOS</span>
           <span class="tech-badge">Android</span>
         </div>
-        <div class="project-cta">Follow Progress on GitHub →</div>
-      </a>
-
-      <div class="saas-teaser reveal">
-        <div class="saas-teaser-text">
-          <h3>Three products — built in public.</h3>
-          <p>We share our progress, thinking, and code as we go. Follow the journey on GitHub and LinkedIn as these products evolve from prototype to production.</p>
-        </div>
-        <a href="https://github.com/ainikaventures" target="_blank" class="saas-teaser-cta">Follow on GitHub →</a>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ─── MARK INTERLUDE ─── -->
-<section class="mark-showcase reveal" aria-hidden="true">
-  <div class="mark-stage" id="markStage">
-    <svg class="ainika-mark ainika-mark--display" viewBox="0 0 32 32">
-      <rect class="box" x="2" y="2" width="28" height="28"/>
-      <path class="chev" d="M16 8 L8 26 M16 8 L24 26"/>
-    </svg>
-  </div>
-  <div class="mark-caption">
-    The Mark
-    <em>Built to ship. Made to matter.</em>
-  </div>
-</section>
-
-<!-- ─── PROCESS ─── -->
-<section id="process">
-  <div class="section-inner">
-    <div class="section-label reveal">How We Work</div>
-    <h2 class="section-title reveal">A clear process.<br><em>No ambiguity.</em></h2>
-    <div class="process-grid">
-      <div class="process-step reveal">
-        <span class="process-step-num">01</span>
-        <h3 class="process-title">Discovery</h3>
-        <p class="process-desc">A focused conversation to understand your problem, your data, and where you want to go. No jargon, no assumptions.</p>
-      </div>
-      <div class="process-step reveal">
-        <span class="process-step-num">02</span>
-        <h3 class="process-title">Define</h3>
-        <p class="process-desc">We map the solution space — requirements, constraints, success metrics — and align stakeholders before a single line of code is written.</p>
-      </div>
-      <div class="process-step reveal">
-        <span class="process-step-num">03</span>
-        <h3 class="process-title">Deliver</h3>
-        <p class="process-desc">Iterative delivery in short cycles with clear milestones. You see progress weekly, not at the end of six months.</p>
-      </div>
-      <div class="process-step reveal">
-        <span class="process-step-num">04</span>
-        <h3 class="process-title">Evolve</h3>
-        <p class="process-desc">Post-launch isn't the end. We help you measure, learn, and continuously improve the product as your users and data grow.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── CONTACT ─── -->
-<section id="contact">
-  <div class="section-inner">
-    <div class="section-label reveal">Get In Touch</div>
-    <h2 class="section-title reveal">Let's build something<br><em>worth building.</em></h2>
-
-    <div class="contact-grid">
-      <div class="contact-info reveal">
-        <h3>Start with a conversation.</h3>
-        <p>Whether you need a fractional PO, an AI product strategy, or just want to explore what's possible with your data — reach out. First call is always free.</p>
-        <div class="contact-details">
-          <div class="contact-detail">
-            <span class="contact-detail-label">Email</span>
-            <a href="mailto:hello@ainika.xyz">hello@ainika.xyz</a>
-          </div>
-          <div class="contact-detail">
-            <span class="contact-detail-label">LinkedIn</span>
-            <a href="https://linkedin.com/in/josenjoy" target="_blank">linkedin.com/in/josenjoy</a>
-          </div>
-          <div class="contact-detail">
-            <span class="contact-detail-label">GitHub</span>
-            <a href="https://github.com/ainikaventures" target="_blank">github.com/ainikaventures</a>
-          </div>
-          <div class="contact-detail">
-            <span class="contact-detail-label">Based</span>
-            <span style="color:var(--ink-mid)">Coventry, UK · Available globally</span>
-          </div>
+        <div class="work-links">
+          <a class="work-link" href="https://github.com/ainikaventures/2048" target="_blank" rel="noopener">view on github <span aria-hidden="true">→</span></a>
         </div>
       </div>
+    </article>
 
-      <div class="reveal">
-        <?php if ($form_success): ?>
-          <div class="form-msg success">Thank you — your message has been received. We'll be in touch within 24 hours.</div>
-        <?php elseif ($form_error === 'verify'): ?>
-          <div class="form-msg error">Verification failed — please check your answer and try again.</div>
-        <?php elseif ($form_error === 'send'): ?>
-          <div class="form-msg error">Something went wrong. Please email hello@ainika.xyz directly.</div>
-        <?php elseif ($form_error === 'fields'): ?>
-          <div class="form-msg error">Please fill in all required fields with a valid email address.</div>
-        <?php endif; ?>
+  </div>
+</section>
 
-        <form class="contact-form" method="POST" action="#contact">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="name">Your Name</label>
-              <input type="text" id="name" name="name" required placeholder="Jane Smith">
-            </div>
-            <div class="form-group">
-              <label for="email">Email Address</label>
-              <input type="email" id="email" name="email" required placeholder="jane@company.com">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="service">Service of Interest</label>
-            <select id="service" name="service">
-              <option value="">Select a service...</option>
-              <option>AI/ML Product Strategy &amp; Roadmapping</option>
-              <option>Business Analysis &amp; Requirements Engineering</option>
-              <option>Data Product Consulting</option>
-              <option>Fractional Product Owner</option>
-              <option>General Enquiry</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="message">Tell Us About Your Project</label>
-            <textarea id="message" name="message" required placeholder="Give us a brief overview of what you're building or the problem you're trying to solve..."></textarea>
-          </div>
-          <!-- Honeypot — hidden from humans, bots fill it -->
-          <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
-            <label for="website_url">Leave this empty</label>
-            <input type="text" name="website_url" id="website_url" tabindex="-1" autocomplete="off">
-          </div>
-
-          <!-- Human verification -->
-          <div class="form-group">
-            <label for="captcha">Quick check — what is <?php echo $_SESSION['captcha_a'] . ' + ' . $_SESSION['captcha_b']; ?>?</label>
-            <input type="number" id="captcha" name="captcha" required placeholder="Your answer" inputmode="numeric">
-          </div>
-
-          <button type="submit" name="contact_submit" class="form-submit">Send Enquiry →</button>
-        </form>
-      </div>
+<section class="section is-smoke" id="process">
+  <div class="section-head">
+    <span class="section-kicker">§ how we work</span>
+    <h2 class="section-title">A clear process.<br><em>No ambiguity.</em></h2>
+  </div>
+  <div class="process-grid">
+    <div class="process-step">
+      <span class="process-num">01</span>
+      <h3 class="process-title">Discovery</h3>
+      <p class="process-desc">A focused conversation to understand your problem, your data, and where you want to go. No jargon, no assumptions.</p>
+    </div>
+    <div class="process-step">
+      <span class="process-num">02</span>
+      <h3 class="process-title">Define</h3>
+      <p class="process-desc">We map the solution space — requirements, constraints, success metrics — and align stakeholders before a single line of code is written.</p>
+    </div>
+    <div class="process-step">
+      <span class="process-num">03</span>
+      <h3 class="process-title">Deliver</h3>
+      <p class="process-desc">Iterative delivery in short cycles with clear milestones. You see progress weekly, not at the end of six months.</p>
+    </div>
+    <div class="process-step">
+      <span class="process-num">04</span>
+      <h3 class="process-title">Evolve</h3>
+      <p class="process-desc">Post-launch isn't the end. We help you measure, learn, and continuously improve the product as your users and data grow.</p>
     </div>
   </div>
 </section>
 
-<!-- ─── FOOTER ─── -->
-<footer>
-  <a href="#hero" class="footer-logo" aria-label="Ainika home">
-    <svg class="ainika-mark" viewBox="0 0 32 32" aria-hidden="true">
-      <rect class="box" x="2" y="2" width="28" height="28"/>
-      <path class="chev" d="M16 8 L8 26 M16 8 L24 26"/>
-    </svg>
-    Ainika
-  </a>
-  <div class="footer-copy">© <?php echo date('Y'); ?> Ainika. All rights reserved.</div>
-  <div class="footer-links">
-    <a href="https://linkedin.com/in/josenjoy" target="_blank">LinkedIn</a>
-    <a href="https://github.com/ainikaventures" target="_blank">GitHub</a>
-    <a href="mailto:hello@ainika.xyz">Email</a>
+<section class="section is-paper" id="contact">
+  <div class="section-head">
+    <span class="section-kicker">§ get in touch</span>
+    <h2 class="section-title">Let's build something<br><em>worth building.</em></h2>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <h3>Start with a conversation.</h3>
+      <p>Whether you need a fractional PO, an AI product strategy, or just want to explore what's possible with your data — reach out. First call is always free.</p>
+      <div class="contact-details">
+        <div class="contact-detail">
+          <span class="contact-detail-label">email</span>
+          <a href="mailto:hello@ainika.xyz">hello@ainika.xyz</a>
+        </div>
+        <div class="contact-detail">
+          <span class="contact-detail-label">linkedin</span>
+          <a href="https://linkedin.com/in/josenjoy" target="_blank" rel="noopener">linkedin.com/in/josenjoy</a>
+        </div>
+        <div class="contact-detail">
+          <span class="contact-detail-label">github</span>
+          <a href="https://github.com/ainikaventures" target="_blank" rel="noopener">github.com/ainikaventures</a>
+        </div>
+        <div class="contact-detail">
+          <span class="contact-detail-label">based</span>
+          <span>Coventry, UK · available globally</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <?php if ($form_success): ?>
+        <div class="form-msg success">Thank you — your message has been received. We'll be in touch within 24 hours.</div>
+      <?php elseif ($form_error === 'verify'): ?>
+        <div class="form-msg error">Verification failed — please check your answer and try again.</div>
+      <?php elseif ($form_error === 'send'): ?>
+        <div class="form-msg error">Something went wrong. Please email hello@ainika.xyz directly.</div>
+      <?php elseif ($form_error === 'fields'): ?>
+        <div class="form-msg error">Please fill in all required fields with a valid email address.</div>
+      <?php endif; ?>
+
+      <form class="contact-form" method="POST" action="#contact" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">your name</label>
+            <input type="text" id="name" name="name" required placeholder="Jane Smith">
+          </div>
+          <div class="form-group">
+            <label for="email">email address</label>
+            <input type="email" id="email" name="email" required placeholder="jane@company.com">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="service">service of interest</label>
+          <select id="service" name="service">
+            <option value="">Select a service…</option>
+            <option>AI/ML Product Strategy &amp; Roadmapping</option>
+            <option>Business Analysis &amp; Requirements Engineering</option>
+            <option>Data Product Consulting</option>
+            <option>Fractional Product Owner</option>
+            <option>General Enquiry</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message">tell us about your project</label>
+          <textarea id="message" name="message" required placeholder="Give us a brief overview of what you're building or the problem you're trying to solve…"></textarea>
+        </div>
+
+        <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
+          <label for="website_url">Leave this empty</label>
+          <input type="text" name="website_url" id="website_url" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div class="form-group">
+          <label for="captcha">quick check — what is <?php echo $_SESSION['captcha_a'] . ' + ' . $_SESSION['captcha_b']; ?>?</label>
+          <input type="number" id="captcha" name="captcha" required placeholder="Your answer" inputmode="numeric">
+        </div>
+
+        <button type="submit" name="contact_submit" class="form-submit">send enquiry <span aria-hidden="true">→</span></button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer class="footer" id="footer" aria-label="footer">
+  <h2 class="footer-lead">let's build something worth building<span class="dot">.</span></h2>
+  <a href="mailto:hello@ainika.xyz" class="footer-email">hello@ainika.xyz</a>
+  <div class="footer-socials">
+    <a href="https://linkedin.com/in/josenjoy" target="_blank" rel="noopener">linkedin ↗</a>
+    <a href="https://github.com/ainikaventures" target="_blank" rel="noopener">github ↗</a>
+  </div>
+  <div class="footer-bottom">
+    <span>© <?php echo date('Y'); ?> ainika.  ·  ainika.xyz  ·  all rights reserved</span>
+    <span>ai-powered products. human-centred strategy.</span>
   </div>
 </footer>
 
+<div class="cookie-bar" id="cookieBar" role="region" aria-label="cookie notice">
+  <p>this site uses cookies for analytics and session recording<span class="dot">.</span></p>
+  <button type="button" id="cookieAck">got it</button>
+</div>
+
 <script>
-// ── CURSOR
-const dot  = document.getElementById('cursorDot');
-const ring = document.getElementById('cursorRing');
-let mx = 0, my = 0, rx = 0, ry = 0;
-document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-(function animCursor() {
-  rx += (mx - rx) * 0.14; ry += (my - ry) * 0.14;
-  dot.style.left  = mx + 'px'; dot.style.top  = my + 'px';
-  ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-  requestAnimationFrame(animCursor);
-})();
-document.querySelectorAll('a, button, .service-card, .project-card').forEach(el => {
-  el.addEventListener('mouseenter', () => ring.classList.add('hover'));
-  el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
-});
-
-// ── NAV SCROLL
-const nav = document.getElementById('mainNav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 60);
-});
-
-// ── REVEAL ON SCROLL
-const reveals = document.querySelectorAll('.reveal');
-const obs = new IntersectionObserver((entries) => {
-  entries.forEach((e, i) => {
-    if (e.isIntersecting) {
-      setTimeout(() => {
-        e.target.classList.add('visible');
-        if (e.target.classList.contains('mark-showcase')) e.target.classList.add('in-view');
-      }, i * 80);
-      obs.unobserve(e.target);
+  (function () {
+    var nav = document.getElementById('nav');
+    var threshold = 80;
+    var ticking = false;
+    function onScroll() {
+      if (!ticking) {
+        window.requestAnimationFrame(function () {
+          nav.classList.toggle('is-scrolled', window.scrollY > threshold);
+          ticking = false;
+        });
+        ticking = true;
+      }
     }
-  });
-}, { threshold: 0.1 });
-reveals.forEach(r => obs.observe(r));
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
 
-// ── MARK PARALLAX — chevron tilts toward cursor when near the stage
-const stage = document.getElementById('markStage');
-if (stage) {
-  const chev = stage.querySelector('.chev');
-  let tx = 0, ty = 0, cx = 0, cy = 0, raf;
-  const tick = () => {
-    cx += (tx - cx) * 0.12;
-    cy += (ty - cy) * 0.12;
-    if (tx === 0 && ty === 0 && Math.abs(cx) < 0.1 && Math.abs(cy) < 0.1) {
-      chev.style.transform = '';
-      raf = null;
-      return;
+    var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var fine = window.matchMedia('(pointer: fine)').matches;
+    if (fine && !prefersReduced) {
+      var dot = document.getElementById('cursorDot');
+      var tx = 0, ty = 0, cx = 0, cy = 0;
+      window.addEventListener('mousemove', function (e) { tx = e.clientX; ty = e.clientY; });
+      (function loop() {
+        cx += (tx - cx) * 0.18;
+        cy += (ty - cy) * 0.18;
+        dot.style.transform = 'translate3d(' + (cx - 3) + 'px,' + (cy - 3) + 'px,0)';
+        requestAnimationFrame(loop);
+      })();
     }
-    chev.style.transform = `translate(${cx}px, ${cy}px)`;
-    raf = requestAnimationFrame(tick);
-  };
-  document.addEventListener('mousemove', e => {
-    const r = stage.getBoundingClientRect();
-    const dx = e.clientX - (r.left + r.width / 2);
-    const dy = e.clientY - (r.top + r.height / 2);
-    const dist = Math.hypot(dx, dy);
-    const reach = 320;
-    if (dist > reach) { tx = 0; ty = 0; }
-    else {
-      const k = (1 - dist / reach) * 1.6;
-      tx = (dx / r.width) * k;
-      ty = (dy / r.height) * k;
-    }
-    if (!raf) raf = requestAnimationFrame(tick);
-  });
-}
+
+    try {
+      var bar = document.getElementById('cookieBar');
+      var ack = document.getElementById('cookieAck');
+      if (bar && !localStorage.getItem('ainika.cookieAck.v2')) {
+        bar.classList.add('is-visible');
+        ack.addEventListener('click', function () {
+          try { localStorage.setItem('ainika.cookieAck.v2', '1'); } catch (e) {}
+          bar.classList.remove('is-visible');
+        });
+      }
+    } catch (e) {}
+  })();
 </script>
+
 </body>
 </html>

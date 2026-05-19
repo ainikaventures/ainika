@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" role="img" aria-label="ainika.">
+  
+  <rect width="1200" height="400" fill="#0E0E10"></rect>
+  <g transform="translate(160, 290)">
+    <text class="word" fill="#FAFAF7">ai</text>
+    <g class="nika-group">
+      <text class="word" fill="#FAFAF7" x="218">nika</text>
+    </g>
+    <text class="word dot" fill="#FF5B2E" x="218">
+      
+      .
+    </text>
+  </g>
+</svg>

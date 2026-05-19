@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>100,000 live jobs, one list — the TopListers milestone | ainika.</title>
+<meta name="description" content="TopListers just crossed 100,000 live job listings, every one hand-checked each morning. The architecture, the things that broke, and what comes next.">
+<link rel="canonical" href="https://ainika.xyz/blog/toplisters-100k.html">
+
+<link rel="icon" type="image/svg+xml" href="/brand/ainika-favicon.svg">
+<link rel="alternate icon" href="/brand/ainika-favicon-32.png">
+<link rel="apple-touch-icon" href="/brand/ainika-apple-touch.svg">
+
+<meta property="og:title" content="100,000 live jobs, one list. What it took to get here.">
+<meta property="og:description" content="TopListers just crossed a hundred thousand active job listings. The architecture, the things that broke, and what comes next.">
+<meta property="og:image" content="https://ainika.xyz/blog/assets/toplisters-100k-poster-1.png">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ainika.xyz/blog/toplisters-100k.html">
+<meta property="article:author" content="Josen Joy">
+<meta property="article:published_time" content="2026-05-19">
+<meta property="article:section" content="Engineering">
+<meta name="twitter:card" content="summary_large_image">
+
+<meta name="theme-color" content="#1F6FEB">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Josen Joy">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/blog/blog.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "100,000 live jobs, one list. What it took to get here.",
+  "description": "TopListers crossed 100,000 active job listings — the architecture, the things that broke, and what comes next.",
+  "image": "https://ainika.xyz/blog/assets/toplisters-100k-poster-1.png",
+  "datePublished": "2026-05-19",
+  "dateModified": "2026-05-19",
+  "author": {
+    "@type": "Person",
+    "name": "Josen Joy",
+    "url": "https://linkedin.com/in/josenjoy"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "ainika.",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ainika.xyz/brand/ainika-mark-light.svg"
+    }
+  },
+  "mainEntityOfPage": "https://ainika.xyz/blog/toplisters-100k.html",
+  "about": {
+    "@type": "Thing",
+    "name": "TopListers",
+    "url": "https://toplisters.xyz"
+  }
+}
+</script>
+</head>
+<body>
+
+<nav class="nav" aria-label="primary">
+  <a href="/" class="nav-wordmark" aria-label="ainika.">ainika<span class="dot">.</span></a>
+  <div class="nav-links">
+    <a href="/#about">about</a>
+    <a href="/#services">services</a>
+    <a href="/#projects">projects</a>
+    <a href="/blog/" class="is-current">writing</a>
+    <a href="/#contact" class="nav-cta">start a conversation</a>
+  </div>
+</nav>
+
+<header class="post-hero is-toplisters">
+  <a class="post-back" href="/blog/">← all writing</a>
+  <span class="post-kicker">milestone · toplisters · may 2026</span>
+  <h1 class="post-title">100,000 live jobs, <em>one list</em><span class="dot">.</span></h1>
+  <div class="post-meta">
+    <span>by Josen Joy</span>
+    <span>19 May 2026</span>
+    <span>6 min read</span>
+    <span><a href="https://toplisters.xyz" target="_blank" rel="noopener" style="color:inherit;border-bottom:1px solid currentColor">toplisters.xyz</a></span>
+  </div>
+</header>
+
+<article class="post-body">
+
+  <figure class="poster-feature">
+    <img src="/blog/assets/toplisters-100k-poster-1.png" alt="TopListers Issue No. 7 — we just crossed 100,000 live jobs, hand-checked every morning. May 19, 2026.">
+  </figure>
+
+  <p><strong>TopListers just crossed one hundred thousand live job listings.</strong> Every one of them hand-checked each morning. No paid feeds, no fake roles padding the count, no "matches" the algorithm hallucinated just real, current openings, ranked one through 100,000.</p>
+
+  <p>I want to mark the moment, partly because milestones deserve marking and partly because the engineering choices that got us here are worth writing down before they become "obvious" in retrospect. This is a short note on what the architecture had to do, what broke along the way, and where we go from here.</p>
+
+  <div class="stats-strip">
+    <div class="stat-block">
+      <span class="stat-num-big">100,000<span class="dot">.</span></span>
+      <span class="stat-label-mono">live jobs ranked</span>
+    </div>
+    <div class="stat-block">
+      <span class="stat-num-big">1<span class="em">×</span></span>
+      <span class="stat-label-mono">refreshed every morning</span>
+    </div>
+    <div class="stat-block">
+      <span class="stat-num-big">0<span class="dot">.</span></span>
+      <span class="stat-label-mono">stale roles tolerated</span>
+    </div>
+    <div class="stat-block">
+      <span class="stat-num-big">6<span class="em">+</span></span>
+      <span class="stat-label-mono">countries covered</span>
+    </div>
+  </div>
+
+  <h2>What "<em>hand-checked</em>" actually means</h2>
+
+  <p>When we say hand-checked, we do not mean a human is reading every single listing every morning that is not how this scales to 100,000. We mean every listing passes through a checked pipeline before it appears on the list, and the pipeline itself is supervised by a person every day. There is a difference, and the difference is the point.</p>
+
+  <p>The pipeline does three things every morning:</p>
+
+  <ul>
+    <li><strong>Fetches</strong> the day's roles from upstream feeds (Adzuna's API is the spine, with a handful of supplementary sources).</li>
+    <li><strong>De-dupes &amp; verifies</strong> every role gets a canonical company/title/location hash, then a lightweight check that the source URL is still live and the role is still open. Dead links and expired roles are dropped before they reach the ranker.</li>
+    <li><strong>Ranks &amp; flags</strong> the freshness, source quality, and signal-richness of each listing produce a rank from 1 to N. Anything that smells like a re-post, a recruiter farm, or a duplicate gets flagged for the morning review queue.</li>
+  </ul>
+
+  <p>I spend ~15 minutes a morning on that review queue. That is the "hand" in hand-checked. It is not glamorous, but it is the difference between a list you trust and a list that gradually fills up with noise.</p>
+
+  <h2>The things that <em>broke</em> along the way</h2>
+
+  <h3>Pagination at 10k</h3>
+  <p>The first wall was the simplest one: client-side pagination of 10,000 ranked rows is fine; 100,000 is not. We moved to cursor-based pagination on the API and virtualised the list on the React side. The page now never holds more than a few hundred rows in the DOM, regardless of how deep you scroll.</p>
+
+  <h3>Dedup at 50k</h3>
+  <p>Around 50,000 active listings, the dumb-but-fast dedup logic (company + title + location → hash) started colliding on legitimate roles two genuinely different Senior Frontend Engineer roles at the same company in the same city, posted by different teams. We added the role's <em>source-issued ID</em> to the hash to keep them distinct, with a soft-collision rule that surfaces probable duplicates to the morning queue instead of dropping them silently. Drop-silently is the kind of bug you never notice until someone complains they cannot find their listing.</p>
+
+  <h3>Trust at 100k</h3>
+  <p>The non-technical failure mode at this scale is trust. Once you cross six figures, the list itself becomes the marketing but only if people believe the count is real. The temptation to pad with stale roles to keep the headline number above some threshold is real, and we have explicitly chosen not to. If the verified count drops below 100,000 tomorrow, the page will say so. That commitment is more important than the number.</p>
+
+  <figure class="poster-feature bleed-dark">
+    <img src="/blog/assets/toplisters-100k-poster-2.png" alt="100k jobs ranked on one list TopListers milestone poster (dark variant).">
+  </figure>
+
+  <h2>What an AI <em>PO lens</em> would say about this</h2>
+
+  <p>If I take my consulting hat off TopListers and look at the milestone the way I would look at a client product, three things stand out:</p>
+
+  <p><strong>Evals before features.</strong> The dedup-and-verify pipeline is, in product language, an evaluation system. It runs every morning, against every candidate listing, with a defined notion of pass/fail (live URL, non-expired, not a duplicate). Most AI and data products do not have one of these. They have a "model" and a "demo" and a vague hope that things are fine. TopListers crossed 100k because the eval came before the feature.</p>
+
+  <p><strong>The human-in-the-loop earns its keep.</strong> Fifteen minutes a morning to handle ambiguous cases is cheap. The mistake people make is trying to design those fifteen minutes away. They are what keep the list trusted; they are not a temporary scaffold to be removed once we have "enough data". They are the product.</p>
+
+  <p><strong>Honest counts compound.</strong> Every product I have ever worked on that inflated a metric daily actives, recommendations served, listings eventually paid for it. It is much easier to write the post that says "we crossed 100k" when the 100k is real.</p>
+
+  <h2>What's <em>next</em></h2>
+
+  <p>A few things on the immediate roadmap:</p>
+
+  <ul>
+    <li><strong>Saved-search alerts.</strong> Tell TopListers what you are looking for, get a once-a-day digest when matching live roles appear. Privacy-first as always no account required, signed-URL unsubscribe.</li>
+    <li><strong>Heatmaps for AI/PM/Data roles.</strong> Country-level views of where the hottest specialities are concentrated this week, this month, this quarter.</li>
+    <li><strong>Anonymous sightings.</strong> Anyone can drop a role they have seen in the wild, with the source link. Useful for catching roles that the official feeds miss.</li>
+  </ul>
+
+  <p>If any of that sounds like something you would use, or you have a job-search problem you wish TopListers solved, tell me. I read everything that comes in to <a href="mailto:hello@ainika.xyz">hello@ainika.xyz</a>, and the roadmap genuinely shifts based on what people are stuck on.</p>
+
+  <blockquote>
+    <p>The list is not the product. The trust that the list is real that is the product.</p>
+  </blockquote>
+
+  <h2>Posters from the <em>100k drop</em></h2>
+
+  <p>A few of the visuals from the announcement, courtesy of the TopListers design system. Feel free to reshare.</p>
+
+  <div class="poster-grid">
+    <img src="/blog/assets/toplisters-100k-poster-1.png" alt="TopListers 100k — Issue No. 7 hand-checked variant">
+    <img src="/blog/assets/toplisters-100k-poster-2.png" alt="TopListers 100k — bright blue variant">
+    <img src="/blog/assets/toplisters-100k-poster-3.png" alt="TopListers 100k — ranked list preview variant">
+    <img src="/blog/assets/toplisters-100k-poster-4.png" alt="TopListers 100k — top bar layered variant">
+    <img src="/blog/assets/toplisters-100k-poster-5.png" alt="TopListers 100k — vertical story variant">
+    <img src="/blog/assets/toplisters-100k-poster-6.png" alt="TopListers 100k — milestone date variant">
+  </div>
+
+  <p style="margin-top:48px;padding-top:24px;border-top:1px solid var(--line);font-size:14px;color:var(--muted);">Thanks for being here. If you build anything related to job market data, hiring intelligence, or product analytics, I would love to hear what you are working on. <a href="https://toplisters.xyz" target="_blank" rel="noopener">→ visit toplisters.xyz</a></p>
+
+</article>
+
+<section class="related" aria-label="related writing">
+  <div class="related-kicker">§ keep reading</div>
+  <div class="related-row">
+    <a class="related-card" href="/blog/ai-product-owner-roadmap.html">
+      <div class="related-card-meta">May 2026 · career</div>
+      <div class="related-card-title">How to become an AI/ML Product Owner a weekend-by-weekend plan<span class="dot">.</span></div>
+    </a>
+    <a class="related-card" href="/blog/">
+      <div class="related-card-meta">all writing</div>
+      <div class="related-card-title">Browse every post<span class="dot">.</span></div>
+    </a>
+  </div>
+</section>
+
+<footer class="footer" aria-label="footer">
+  <h2 class="footer-lead">let's build something worth building<span class="dot">.</span></h2>
+  <a href="mailto:hello@ainika.xyz" class="footer-email">hello@ainika.xyz</a>
+  <div class="footer-socials">
+    <a href="https://linkedin.com/in/josenjoy" target="_blank" rel="noopener">linkedin ↗</a>
+    <a href="https://github.com/ainikaventures" target="_blank" rel="noopener">github ↗</a>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 ainika.  ·  ainika.xyz  ·  all rights reserved</span>
+    <span>ai-powered products. human-centred strategy.</span>
+  </div>
+</footer>
+
+</body>
+</html>

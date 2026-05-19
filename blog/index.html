@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>writing — ainika. · AI products & consulting</title>
+<meta name="description" content="Field notes on AI product ownership, data strategy, and the products we build at ainika.">
+<link rel="canonical" href="https://ainika.xyz/blog/">
+
+<link rel="icon" type="image/svg+xml" href="/brand/ainika-favicon.svg">
+<link rel="alternate icon" href="/brand/ainika-favicon-32.png">
+<link rel="apple-touch-icon" href="/brand/ainika-apple-touch.svg">
+
+<meta property="og:title" content="writing — ainika.">
+<meta property="og:description" content="Field notes on AI product ownership, data strategy, and the products we build at ainika.">
+<meta property="og:image" content="https://ainika.xyz/brand/ainika-og.svg">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ainika.xyz/blog/">
+<meta name="twitter:card" content="summary_large_image">
+
+<meta name="theme-color" content="#FAFAF7">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Josen Joy">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/blog/blog.css">
+</head>
+<body>
+
+<nav class="nav" id="nav" aria-label="primary">
+  <a href="/" class="nav-wordmark" aria-label="ainika.">ainika<span class="dot">.</span></a>
+  <div class="nav-links">
+    <a href="/#about">about</a>
+    <a href="/#services">services</a>
+    <a href="/#projects">projects</a>
+    <a href="/blog/" class="is-current">writing</a>
+    <a href="/#contact" class="nav-cta">start a conversation</a>
+  </div>
+</nav>
+
+<header class="blog-hero">
+  <div class="blog-hero-kicker">ainika · field notes</div>
+  <h1 class="blog-hero-title">Writing<span class="dot">.</span></h1>
+  <p class="blog-hero-sub">Notes from building <em>AI products</em>, owning data strategy, and shipping the work we wish someone had written about when we started.</p>
+</header>
+
+<main class="blog-index">
+
+  <article class="post-card is-feature">
+    <a class="post-card-link" href="/blog/toplisters-100k.html">
+      <div class="post-card-thumb is-toplisters">
+        <span class="post-card-status"><span class="status-dot is-live"></span>milestone</span>
+        <div class="post-card-bignum">100,000<span class="dot">.</span></div>
+        <div class="post-card-overline">live jobs, hand-checked every morning</div>
+      </div>
+      <div class="post-card-copy">
+        <div class="post-card-meta">19 May 2026 · 6 min read · TopListers</div>
+        <h2 class="post-card-title">100,000 live jobs, one list. What it took to get here<span class="dot">.</span></h2>
+        <p class="post-card-desc">TopListers just crossed a hundred thousand active job listings, every one of them hand-checked each morning. Here's what the architecture had to do to get there, what broke along the way, and what comes next.</p>
+        <span class="post-card-cta">read the story <span aria-hidden="true">→</span></span>
+      </div>
+    </a>
+  </article>
+
+  <article class="post-card">
+    <a class="post-card-link" href="/blog/ai-product-owner-roadmap.html">
+      <div class="post-card-thumb is-roadmap">
+        <span class="post-card-status"><span class="status-dot"></span>career roadmap</span>
+        <div class="post-card-overline">14 weekends · free resources</div>
+        <div class="post-card-medtitle">How to become an<br><em>AI/ML Product Owner</em><span class="dot">.</span></div>
+      </div>
+      <div class="post-card-copy">
+        <div class="post-card-meta">May 2026 · 9 min read · career</div>
+        <h2 class="post-card-title">How to become an AI/ML Product Owner: a weekend-by-weekend plan<span class="dot">.</span></h2>
+        <p class="post-card-desc">A complete, beginner-friendly roadmap with free YouTube and DeepLearning.AI resources. Built from real experience, structured into actionable weekends. No data science degree required.</p>
+        <span class="post-card-cta">read the roadmap <span aria-hidden="true">→</span></span>
+      </div>
+    </a>
+  </article>
+
+  <div class="more-soon">
+    <span class="more-soon-kicker">§ more soon</span>
+    <p>Working on pieces about evals for AI products, what we learned spinning up SplitAI's FX layer, and how to scope an agent feature without setting fire to your roadmap. Subscribe at <a href="mailto:hello@ainika.xyz">hello@ainika.xyz</a> if you want first read.</p>
+  </div>
+
+</main>
+
+<footer class="footer" aria-label="footer">
+  <h2 class="footer-lead">let's build something worth building<span class="dot">.</span></h2>
+  <a href="mailto:hello@ainika.xyz" class="footer-email">hello@ainika.xyz</a>
+  <div class="footer-socials">
+    <a href="https://linkedin.com/in/josenjoy" target="_blank" rel="noopener">linkedin ↗</a>
+    <a href="https://github.com/ainikaventures" target="_blank" rel="noopener">github ↗</a>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 ainika.  ·  ainika.xyz  ·  all rights reserved</span>
+    <span>ai-powered products. human-centred strategy.</span>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var nav = document.getElementById('nav');
+    var threshold = 80;
+    var ticking = false;
+    function onScroll() {
+      if (!ticking) {
+        window.requestAnimationFrame(function () {
+          nav.classList.toggle('is-scrolled', window.scrollY > threshold);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+</script>
+
+</body>
+</html>

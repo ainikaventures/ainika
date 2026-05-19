@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="ainika.">
+  
+  <rect width="1200" height="630" fill="#0E0E10"></rect>
+  <text x="80" y="380" font-family="&#39;Outfit&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif" font-weight="700" font-size="220" letter-spacing="-9" fill="#FAFAF7">ainika<tspan fill="#FF5B2E">.</tspan></text>
+  <text x="84" y="450" font-family="&#39;Outfit&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif" font-weight="500" font-size="32" letter-spacing="-0.5" fill="#FAFAF7" opacity="0.7">identity for software that thinks in shapes.</text>
+  <line x1="80" y1="80" x2="80" y2="120" stroke="#FF5B2E" stroke-width="4"></line>
+  <text x="80" y="60" font-family="&#39;JetBrains Mono&#39;, monospace" font-weight="500" font-size="16" letter-spacing="2" fill="#FAFAF7" opacity="0.5">AI-NATIVE STUDIO · 2025</text>
+</svg>

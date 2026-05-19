@@ -1,8 +1,8 @@
-# Ainika
+# ainika.
 
-> AI-Powered Products. Human-Centred Strategy.
+> AI-powered products. Human-centred strategy.
 
-Ainika is the consulting practice of Josen Joy — a Senior Product Owner, Business Analyst, and AI/ML strategist with over a decade of experience building AI/ML and SaaS products across fintech, enterprise automation, and digital transformation.
+ainika. is the consulting practice of Josen Joy — a Senior Product Owner, Business Analyst, and AI/ML strategist with over a decade of experience building AI/ML and SaaS products across fintech, enterprise automation, and digital transformation.
 
 ## About
 
@@ -21,9 +21,9 @@ Ainika is the consulting practice of Josen Joy — a Senior Product Owner, Busin
 
 ## Products & Projects
 
-- TopListers (https://github.com/ainikaventures/toplisters) — privacy-first job market intelligence platform (in development). Track applications, submit anonymous job sightings, explore global hiring trends. Built with Python, FastAPI, React, Supabase.
-- SplitAI (https://github.com/ainikaventures/splitai) — smart expense splitting app for iOS and Android. Built with Flutter/Dart and PHP.
-- 2048 by Ainika (https://github.com/ainikaventures/2048) — reimagined 2048 puzzle game with custom tile icons, themes, and offline play. Built with Flutter/Dart.
+- TopListers (https://toplisters.xyz, repo: https://github.com/ainikaventures/toplisters) — live. Privacy-first job market intelligence platform. Track applications, share anonymous job sightings, read global hiring trends. Built with Python, FastAPI, React, Supabase.
+- SplitAI (https://github.com/ainikaventures/splitai) — in development. Smart expense splitting for iOS and Android. Flutter/Dart with a PHP backend.
+- 2048 by Ainika (https://github.com/ainikaventures/2048) — in development. Reimagined 2048 with custom tile icons, themes, and offline play. Flutter/Dart.
 
 ## Contact
 
